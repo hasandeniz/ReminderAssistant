@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_one"
+        android:icon="@mipmap/calendar"
+        android:title="Item One"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_two"
+        android:icon="@mipmap/night_mode"
+        android:title="Item Two"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_three"
+        android:icon="@mipmap/notification_bell"
+        android:title="Item Three"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_four"
+        android:icon="@mipmap/add_event"
+        android:title="Item Four"
+        app:showAsAction="ifRoom" />
+
+
+</menu>
