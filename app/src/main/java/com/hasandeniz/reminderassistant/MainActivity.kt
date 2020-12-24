@@ -3,6 +3,7 @@ package com.hasandeniz.reminderassistant
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu, menu)
         return true
     }
+
 
 
 
