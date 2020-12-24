@@ -27,8 +27,6 @@ class RecyclerViewAdapter(private val exampleList: List<ExampleItem>) : Recycler
         holder.imageText1.text = currentItem.text3
         holder.imageText2.text = currentItem.text4
         holder.imageButton.setOnClickListener(this)
-
-
     }
 
     override fun getItemCount() = exampleList.size
@@ -39,9 +37,6 @@ class RecyclerViewAdapter(private val exampleList: List<ExampleItem>) : Recycler
         val imageText1: TextView = itemView.findViewById(R.id.imageTextUp)
         val imageText2: TextView = itemView.findViewById(R.id.imageTextDown)
         val imageButton: ImageButton = itemView.findViewById(R.id.popupMenuButton)
-
-
-
     }
 
     override fun onClick(v: View?) {
@@ -49,7 +44,7 @@ class RecyclerViewAdapter(private val exampleList: List<ExampleItem>) : Recycler
     }
 
     private fun showPopupMenu(view : View){
-        val popupMenu: PopupMenu = PopupMenu(view.context,view)
+        val popupMenu = PopupMenu(view.context,view)
         popupMenu.inflate(R.menu.popup_menu)
         popupMenu.setOnMenuItemClickListener(this)
         popupMenu.show()

@@ -2,8 +2,9 @@
 
     <style name="Theme.ReminderAssistant" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name ="colorPrimary">@color/colorPrimary</item>
-        <item name ="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name ="colorPrimaryDark">@color/colorPrimary</item>
         <item name ="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
     </style>
+
 </resources>
