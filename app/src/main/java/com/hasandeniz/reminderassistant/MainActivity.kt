@@ -3,22 +3,37 @@ package com.hasandeniz.reminderassistant
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.widget.ArrayAdapter
-import androidx.core.content.ContextCompat
-import com.hasandeniz.reminderassistant.databinding.ActivityMainBinding
+import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
+import com.hasandeniz.reminderassistant.fragments.*
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(R.layout.activity_main)
+
+
+        val adapter = FragmentAdapter(supportFragmentManager)
+        adapter.addFragment(MondayFragment(),"Monday")
+        adapter.addFragment(TuesdayFragment(),"Tuesday")
+        adapter.addFragment(WednesdayFragment(),"Wednesday")
+        adapter.addFragment(ThursdayFragment(),"Thursday")
+        adapter.addFragment(FridayFragment(),"Friday")
+        adapter.addFragment(SaturdayFragment(),"Saturday")
+        adapter.addFragment(SundayFragment(),"Sunday")
+        viewPager.adapter = adapter
+        tabs.setupWithViewPager(viewPager)
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu, menu)
         return true
     }
+
+
+
+
+
+
 }
