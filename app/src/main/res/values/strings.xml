@@ -5,4 +5,9 @@
     <string name="night_mode">Night Mode</string>
     <string name="notification">Notification</string>
     <string name="add_event">Add Event</string>
+    <string name="_12_00">12:00</string>
+    <string name="line_1">Line 1</string>
+    <string name="line_2">Line 2</string>
+    <string name="background_for_times">background for times</string>
+    <string name="more_menu">more menu</string>
 </resources>

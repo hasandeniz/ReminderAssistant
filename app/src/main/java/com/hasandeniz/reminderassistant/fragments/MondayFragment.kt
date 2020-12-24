@@ -16,24 +16,16 @@ class MondayFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
-
-
         return inflater.inflate(R.layout.fragment_monday, container, false)
-
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val exampleItem = denemeItem()
-        val exampleItem2 = denemeItem()
+        val exampleItem = exampleItem()
+        val exampleItem2 = exampleItem()
 
         val exampleItemList = ArrayList<ExampleItem>()
         exampleItemList.add(exampleItem)
@@ -44,7 +36,7 @@ class MondayFragment : Fragment() {
 
     }
 
-    private fun denemeItem(): ExampleItem{
+    private fun exampleItem(): ExampleItem{
         val text2 = "Deneme 2"
         val text1 = "Deneme 1"
         val imageText1 = "12:00"
