@@ -3,7 +3,7 @@ package com.hasandeniz.reminderassistant
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.view.MenuItem
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,6 +14,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val actionBar = supportActionBar
+        actionBar!!.title = "Reminder"
 
         val adapter = FragmentAdapter(supportFragmentManager)
         adapter.addFragment(MondayFragment(),"Monday")
@@ -30,6 +32,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when (id) {
+            R.id.actionCalendar -> {
+                println("action calendar clicked")
+            }
+            R.id.actionNightMode -> {
+                println("action night mode clicked")
+
+            }
+            R.id.actionNotifications -> {
+                println("action notification clicked")
+
+            }
+            R.id.actionAddEvent -> {
+                println("action add event clicked")
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
