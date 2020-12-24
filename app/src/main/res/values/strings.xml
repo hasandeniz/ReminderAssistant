@@ -10,4 +10,7 @@
     <string name="line_2">Line 2</string>
     <string name="background_for_times">background for times</string>
     <string name="more_menu">more menu</string>
+    <string name="change_color">Change Color</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
 </resources>

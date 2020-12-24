@@ -24,4 +24,9 @@ class FragmentAdapter(supportFragmentManager: FragmentManager) : FragmentPagerAd
     override fun getPageTitle(position: Int): CharSequence? {
         return titleList[position]
     }
+
+    override fun getItemPosition(`object`: Any): Int {
+        return super.getItemPosition(`object`)
+    }
+
 }

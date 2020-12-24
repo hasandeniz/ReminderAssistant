@@ -1,15 +1,23 @@
 package com.hasandeniz.reminderassistant
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.PopupMenu
+import com.github.dhaval2404.colorpicker.MaterialColorPickerDialog
+import com.github.dhaval2404.colorpicker.listener.ColorListener
+import com.github.dhaval2404.colorpicker.model.ColorSwatch
+import com.google.android.material.tabs.TabLayout
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var adapter: FragmentAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -17,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.title = "Reminder"
 
-        val adapter = FragmentAdapter(supportFragmentManager)
+        adapter = FragmentAdapter(supportFragmentManager)
         adapter.addFragment(MondayFragment(),"Monday")
         adapter.addFragment(TuesdayFragment(),"Tuesday")
         adapter.addFragment(WednesdayFragment(),"Wednesday")
@@ -28,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = adapter
         tabs.setupWithViewPager(viewPager)
 
+
+
+
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
@@ -35,8 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        when (id) {
+        when (item.itemId) {
             R.id.actionCalendar -> {
                 println("action calendar clicked")
             }
@@ -49,13 +59,16 @@ class MainActivity : AppCompatActivity() {
 
             }
             R.id.actionAddEvent -> {
-                println("action add event clicked")
+                val position: Int = tabs.selectedTabPosition
+                val intent = Intent(this,AddEventActivity::class.java)
+                intent.putExtra("position",position)
+                startActivity(intent)
+
 
             }
         }
         return super.onOptionsItemSelected(item)
     }
-
 
 
 
