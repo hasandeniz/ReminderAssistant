@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_thursday.*
 
 
 class ThursdayFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,8 +22,6 @@ class ThursdayFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_thursday, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-
         recyclerViewThursday.adapter = RecyclerViewAdapter(detailsListThursday)
         recyclerViewThursday.layoutManager = LinearLayoutManager(activity)
         recyclerViewThursday.setHasFixedSize(true)

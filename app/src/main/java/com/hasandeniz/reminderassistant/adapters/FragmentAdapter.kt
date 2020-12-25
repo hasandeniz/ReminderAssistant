@@ -25,8 +25,4 @@ class FragmentAdapter(supportFragmentManager: FragmentManager) : FragmentPagerAd
         return titleList[position]
     }
 
-    override fun getItemPosition(`object`: Any): Int {
-        return super.getItemPosition(`object`)
-    }
-
 }
