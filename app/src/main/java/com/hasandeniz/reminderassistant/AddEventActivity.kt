@@ -1,21 +1,14 @@
 package com.hasandeniz.reminderassistant
 
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.NoCopySpan
-import android.text.TextWatcher
-import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.RecyclerView
-import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import kotlinx.android.synthetic.main.activity_add_event.*
-import kotlinx.android.synthetic.main.fragment_monday.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -38,7 +31,7 @@ class AddEventActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val actionBar = supportActionBar
-        actionBar!!.title = "Reminder"
+        actionBar!!.hide()
         setContentView(R.layout.activity_add_event)
         courseName = ""
         className = ""
@@ -53,7 +46,8 @@ class AddEventActivity : AppCompatActivity() {
         saveButton.isEnabled = !(startTime == "" || finishTime == "")
     }
 
-    fun startTime(view:View){
+    @SuppressLint("SimpleDateFormat")
+    fun startTime(view: View){
         val cal = Calendar.getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY,hour)
@@ -64,7 +58,8 @@ class AddEventActivity : AppCompatActivity() {
         }
         TimePickerDialog(this,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
     }
-    fun finishTime(view:View){
+    @SuppressLint("SimpleDateFormat")
+    fun finishTime(view: View){
         val cal = Calendar.getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY,hour)
@@ -80,10 +75,11 @@ class AddEventActivity : AppCompatActivity() {
 
 
 
-    fun button(view: View){
+    fun saveButton(view: View){
         courseName = courseNameInput.text.toString()
         className = classNameInput.text.toString()
         val mainIntent = Intent(this,MainActivity::class.java)
+        //var mIntent: Intent? = null
 
         if (courseName == "" || className == ""){
             val builder = AlertDialog.Builder(this)
@@ -97,45 +93,51 @@ class AddEventActivity : AppCompatActivity() {
                     date = "Monday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListMonday.add(newItem)
-
+                    //mIntent = Intent(this,MondayFragment::class.java)
                 }
                 1 -> {
                     date = "Tuesday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListTuesday.add(newItem)
+                    //mIntent = Intent(this,TuesdayFragment::class.java)
                 }
                 2 -> {
                     date = "Wednesday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListWednesday.add(newItem)
+                    //mIntent = Intent(this,WednesdayFragment::class.java)
                 }
                 3 -> {
                     date = "Thursday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListThursday.add(newItem)
+                    //mIntent = Intent(this,ThursdayFragment::class.java)
                 }
                 4 -> {
                     date = "Friday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListFriday.add(newItem)
+                    //mIntent = Intent(this,FridayFragment::class.java)
                 }
                 5 -> {
                     date = "Saturday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListSaturday.add(newItem)
+                    //mIntent = Intent(this,SaturdayFragment::class.java)
                 }
                 6 -> {
                     date = "Sunday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListSunday.add(newItem)
+                    //mIntent = Intent(this,SundayFragment::class.java)
                 }
             }
-            finish()
-            //startActivity(mainIntent)
+            startActivity(mainIntent)
         }
 
     }
-
-
+    fun cancelButton(view: View) {
+        finish()
+    }
 
 }
