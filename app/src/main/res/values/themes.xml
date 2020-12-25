@@ -1,12 +1,7 @@
 <resources>
-
     <style name="Theme.ReminderAssistant" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name ="colorPrimary">@color/colorPrimary</item>
-        <item name ="colorPrimaryDark">@color/colorPrimary</item>
+        <item name ="colorPrimary">#673AB7</item>
+        <item name ="colorPrimaryDark">#673AB7</item>
         <item name ="colorAccent">@color/colorAccent</item>
     </style>
-
-
-
-
 </resources>
