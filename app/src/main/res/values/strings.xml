@@ -13,4 +13,13 @@
     <string name="change_color">Change Color</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="time_button_default_text">00:00</string>
+    <string name="finish_time">Finish Time</string>
+    <string name="start_time">Start Time</string>
+    <string name="class_name">Class Name</string>
+    <string name="course_name">Course Name</string>
+    <string name="enter_the_course_name">Enter the course name…</string>
+    <string name="enter_the_name_of_the_class">Enter the name of the class…</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 </resources>

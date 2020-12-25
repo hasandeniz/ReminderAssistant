@@ -1,10 +1,12 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="Theme.ReminderAssistant" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name ="colorPrimary">@color/colorPrimary</item>
         <item name ="colorPrimaryDark">@color/colorPrimary</item>
         <item name ="colorAccent">@color/colorAccent</item>
-
     </style>
+
+
+
 
 </resources>
