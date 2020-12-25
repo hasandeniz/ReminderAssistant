@@ -22,4 +22,5 @@
     <string name="enter_the_name_of_the_class">Enter the name of the class…</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="choose_theme_text">Choose Theme</string>
 </resources>
