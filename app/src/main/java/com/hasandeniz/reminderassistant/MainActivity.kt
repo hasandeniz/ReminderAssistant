@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.tabs.TabLayout
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.fragments.*
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        checkTheme()
         val actionBar = supportActionBar
         actionBar!!.title = "Reminder"
         adapter = FragmentAdapter(supportFragmentManager)
@@ -45,8 +48,7 @@ class MainActivity : AppCompatActivity() {
                 println("action calendar clicked")
             }
             R.id.actionNightMode -> {
-                println("action night mode clicked")
-
+                chooseThemeDialog()
             }
             R.id.actionNotifications -> {
                 println("action notification clicked")
@@ -62,6 +64,57 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+    private fun chooseThemeDialog() {
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.choose_theme_text))
+        val styles = arrayOf("Light", "Dark", "System default")
+        val checkedItem = MyPreferences(this).darkMode
+
+        builder.setSingleChoiceItems(styles, checkedItem) { dialog, which ->
+
+            when (which) {
+                0 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    MyPreferences(this).darkMode = 0
+                    delegate.applyDayNight()
+                    dialog.dismiss()
+                }
+                1 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    MyPreferences(this).darkMode = 1
+                    delegate.applyDayNight()
+                    dialog.dismiss()
+                }
+                2 -> {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                    MyPreferences(this).darkMode = 2
+                    delegate.applyDayNight()
+                    dialog.dismiss()
+                }
+
+            }
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+    private fun checkTheme() {
+        when (MyPreferences(this).darkMode) {
+            0 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                delegate.applyDayNight()
+            }
+            1 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                delegate.applyDayNight()
+            }
+            2 -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+                delegate.applyDayNight()
+            }
+        }
     }
 
 
