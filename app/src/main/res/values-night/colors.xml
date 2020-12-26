@@ -11,8 +11,8 @@
     <color name="silver">#C0C0C0</color>
     <color name="black">#000000</color>
     <color name="afwhite">#F2F3F4</color>
-    <color name="addEventTextColor">@color/black</color>
-    <color name="addEventTextHintColor">#3C3B3B</color>
-    <color name="editTextDesignColor">@color/silver</color>
+    <color name="addEventTextColor">@color/afwhite</color>
+    <color name="addEventTextHintColor">@color/silver</color>
+    <color name="editTextDesignColor">@color/white</color>
 
 </resources>
