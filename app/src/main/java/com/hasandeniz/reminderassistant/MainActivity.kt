@@ -13,6 +13,7 @@ import com.google.android.material.tabs.TabLayout
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(SundayFragment(), "Sunday")
         viewPager.adapter = adapter
         tabs.setupWithViewPager(viewPager)
+        val tabLayout = findViewById<View>(R.id.tabs) as TabLayout
+        val tab = tabLayout.getTabAt(checkDay())
+        tab!!.select()
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -117,11 +121,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkDay():Int{
+        val calendar: Calendar = Calendar.getInstance()
+        return when (calendar.get(Calendar.DAY_OF_WEEK)) {
+            Calendar.MONDAY -> 0
+            Calendar.TUESDAY -> 1
+            Calendar.WEDNESDAY -> 2
+            Calendar.THURSDAY -> 3
+            Calendar.FRIDAY -> 4
+            Calendar.SATURDAY -> 5
+            Calendar.SUNDAY -> 6
+            else -> 0
+        }
 
-
-
-
-
-
+    }
 
 }

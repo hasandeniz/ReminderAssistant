@@ -53,7 +53,7 @@ class AddEventActivity : AppCompatActivity() {
             cal.set(Calendar.HOUR_OF_DAY,hour)
             cal.set(Calendar.MINUTE,minute)
             startTime = SimpleDateFormat("HH:mm").format(cal.time).toString()
-            startTimeButton.text = startTime
+            startTimeButton.text = "Start Time: " +startTime
             check()
         }
         TimePickerDialog(this,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
@@ -65,7 +65,7 @@ class AddEventActivity : AppCompatActivity() {
             cal.set(Calendar.HOUR_OF_DAY,hour)
             cal.set(Calendar.MINUTE,minute)
             finishTime = SimpleDateFormat("HH:mm").format(cal.time).toString()
-            finishTimeButton.text = finishTime
+            finishTimeButton.text = "Finish Time: " + finishTime
             check()
         }
         TimePickerDialog(this,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
