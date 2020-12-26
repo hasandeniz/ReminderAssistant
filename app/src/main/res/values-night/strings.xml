@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">ReminderAssistant</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="calendar">Calendar</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="notification">Notification</string>
+    <string name="add_event">Add Event</string>
+    <string name="_12_00">12:00</string>
+    <string name="line_1">Line 1</string>
+    <string name="line_2">Line 2</string>
+    <string name="background_for_times">background for times</string>
+    <string name="more_menu">more menu</string>
+    <string name="change_color">Change Color</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="time_button_default_text">00:00</string>
+    <string name="finish_time">Finish Time</string>
+    <string name="start_time">Start Time</string>
+    <string name="class_name">Class Name</string>
+    <string name="course_name">Course Name</string>
+    <string name="enter_the_course_name">Enter the course name…</string>
+    <string name="enter_the_name_of_the_class">Enter the name of the class…</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="choose_theme_text">Choose Theme</string>
+</resources>
