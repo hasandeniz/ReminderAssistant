@@ -14,5 +14,6 @@
     <color name="addEventTextColor">@color/black</color>
     <color name="addEventTextHintColor">#717070</color>
     <color name="editTextDesignColor">@color/silver</color>
+    <color name="moreButtonBackground">@color/white</color>
 
 </resources>

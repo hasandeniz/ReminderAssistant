@@ -26,18 +26,9 @@ class MainActivity : AppCompatActivity() {
         checkTheme()
         val actionBar = supportActionBar
         actionBar!!.title = "Reminder"
-        adapter = FragmentAdapter(supportFragmentManager)
-        adapter.addFragment(MondayFragment(), "Monday")
-        adapter.addFragment(TuesdayFragment(), "Tuesday")
-        adapter.addFragment(WednesdayFragment(), "Wednesday")
-        adapter.addFragment(ThursdayFragment(), "Thursday")
-        adapter.addFragment(FridayFragment(), "Friday")
-        adapter.addFragment(SaturdayFragment(), "Saturday")
-        adapter.addFragment(SundayFragment(), "Sunday")
-        viewPager.adapter = adapter
-        tabs.setupWithViewPager(viewPager)
-        val tabLayout = findViewById<View>(R.id.tabs) as TabLayout
-        val tab = tabLayout.getTabAt(checkDay())
+        createFragments()
+
+        val tab = tabs.getTabAt(checkDay())
         tab!!.select()
 
     }
@@ -133,7 +124,19 @@ class MainActivity : AppCompatActivity() {
             Calendar.SUNDAY -> 6
             else -> 0
         }
+    }
 
+    private fun createFragments(){
+        adapter = FragmentAdapter(supportFragmentManager)
+        adapter.addFragment(MondayFragment(), "Monday")
+        adapter.addFragment(TuesdayFragment(), "Tuesday")
+        adapter.addFragment(WednesdayFragment(), "Wednesday")
+        adapter.addFragment(ThursdayFragment(), "Thursday")
+        adapter.addFragment(FridayFragment(), "Friday")
+        adapter.addFragment(SaturdayFragment(), "Saturday")
+        adapter.addFragment(SundayFragment(), "Sunday")
+        viewPager.adapter = adapter
+        tabs.setupWithViewPager(viewPager)
     }
 
 }
