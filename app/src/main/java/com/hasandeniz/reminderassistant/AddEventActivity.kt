@@ -7,8 +7,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
+import com.hasandeniz.reminderassistant.data.Item
+import com.hasandeniz.reminderassistant.data.ItemViewModel
 import kotlinx.android.synthetic.main.activity_add_event.*
+import kotlinx.coroutines.InternalCoroutinesApi
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,7 +32,10 @@ class AddEventActivity : AppCompatActivity() {
     lateinit var startTime : String
     lateinit var finishTime : String
     private lateinit var date : String
+    @InternalCoroutinesApi
+    private lateinit var mItemViewModel: ItemViewModel
 
+    @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val actionBar = supportActionBar
@@ -38,6 +46,7 @@ class AddEventActivity : AppCompatActivity() {
         startTime = ""
         finishTime = ""
         check()
+        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
 
     }
 
@@ -75,6 +84,7 @@ class AddEventActivity : AppCompatActivity() {
 
 
 
+    @InternalCoroutinesApi
     fun saveButton(view: View){
         courseName = courseNameInput.text.toString()
         className = classNameInput.text.toString()
@@ -93,43 +103,57 @@ class AddEventActivity : AppCompatActivity() {
                     date = "Monday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListMonday.add(newItem)
-                    //mIntent = Intent(this,MondayFragment::class.java)
+                    val item = Item(0,courseName,className,startTime,finishTime,date)
+                    mItemViewModel.addItem(item)
+                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
                 }
                 1 -> {
                     date = "Tuesday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListTuesday.add(newItem)
-                    //mIntent = Intent(this,TuesdayFragment::class.java)
+                    val item = Item(0,courseName,className,startTime,finishTime,date)
+                    mItemViewModel.addItem(item)
+                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
                 }
                 2 -> {
                     date = "Wednesday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListWednesday.add(newItem)
-                    //mIntent = Intent(this,WednesdayFragment::class.java)
+                    val item = Item(0,courseName,className,startTime,finishTime,date)
+                    mItemViewModel.addItem(item)
+                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
                 }
                 3 -> {
                     date = "Thursday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListThursday.add(newItem)
-                    //mIntent = Intent(this,ThursdayFragment::class.java)
+                    val item = Item(0,courseName,className,startTime,finishTime,date)
+                    mItemViewModel.addItem(item)
+                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
                 }
                 4 -> {
                     date = "Friday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListFriday.add(newItem)
-                    //mIntent = Intent(this,FridayFragment::class.java)
+                    val item = Item(0,courseName,className,startTime,finishTime,date)
+                    mItemViewModel.addItem(item)
+                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
                 }
                 5 -> {
                     date = "Saturday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListSaturday.add(newItem)
-                    //mIntent = Intent(this,SaturdayFragment::class.java)
+                    val item = Item(0,courseName,className,startTime,finishTime,date)
+                    mItemViewModel.addItem(item)
+                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
                 }
                 6 -> {
                     date = "Sunday"
                     val newItem = ExampleItem(courseName,className,startTime,finishTime,date)
                     detailsListSunday.add(newItem)
-                    //mIntent = Intent(this,SundayFragment::class.java)
+                    val item = Item(0,courseName,className,startTime,finishTime,date)
+                    mItemViewModel.addItem(item)
+                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
                 }
             }
             startActivity(mainIntent)
@@ -138,6 +162,9 @@ class AddEventActivity : AppCompatActivity() {
     }
     fun cancelButton(view: View) {
         finish()
+    }
+    private fun insertDataToDatabase(){
+
     }
 
 }

@@ -11,5 +11,7 @@ data class Item(
     val courseName:String,
     val className:String,
     val startTime:String,
-    val finishTime:String
+    val finishTime:String,
+    val day:String,
+
 )
