@@ -11,12 +11,26 @@ import kotlinx.coroutines.launch
 @InternalCoroutinesApi
 class ItemViewModel(application: Application): AndroidViewModel(application) {
 
-    private val readAllData: LiveData<List<Item>>
+    val readAllData: LiveData<List<Item>>
+    val readMondayData: LiveData<List<Item>>
+    val readTuesdayData: LiveData<List<Item>>
+    val readWednesdayData: LiveData<List<Item>>
+    val readThursdayData: LiveData<List<Item>>
+    val readFridayData: LiveData<List<Item>>
+    val readSaturdayData: LiveData<List<Item>>
+    val readSundayData: LiveData<List<Item>>
     private val repository: ItemRepository
 
     init {
         val itemDao = ItemDatabase.getDatabase(application).itemDao()
         repository = ItemRepository(itemDao)
+        readMondayData = repository.readMondayData
+        readTuesdayData = repository.readTuesdayData
+        readWednesdayData = repository.readWednesdayData
+        readThursdayData = repository.readThursdayData
+        readFridayData = repository.readFridayData
+        readSaturdayData = repository.readSaturdayData
+        readSundayData = repository.readSundayData
         readAllData = repository.readAllData
     }
 

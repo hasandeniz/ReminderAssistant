@@ -9,11 +9,13 @@ import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.hasandeniz.reminderassistant.ExampleItem
 import com.hasandeniz.reminderassistant.R
+import com.hasandeniz.reminderassistant.data.Item
 
 
-class RecyclerViewAdapter(private var exampleList: ArrayList<ExampleItem>) : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+
+    private var itemList = emptyList<Item>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_row, parent, false)
@@ -21,16 +23,16 @@ class RecyclerViewAdapter(private var exampleList: ArrayList<ExampleItem>) : Rec
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem  = exampleList[position]
-        holder.textView1.text = currentItem.text1
-        holder.textView2.text = currentItem.text2
-        holder.imageText1.text = currentItem.text3
-        holder.imageText2.text = currentItem.text4
+        val currentItem  = itemList[position]
+        holder.textView1.text = currentItem.courseName
+        holder.textView2.text = currentItem.className
+        holder.imageText1.text = currentItem.startTime
+        holder.imageText2.text = currentItem.finishTime
 
     }
 
     override fun getItemCount(): Int {
-        return exampleList.size
+        return itemList.size
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
@@ -58,10 +60,11 @@ class RecyclerViewAdapter(private var exampleList: ArrayList<ExampleItem>) : Rec
                     true
                 }
                 R.id.actionPopupDelete -> {
-                    exampleList.removeAt(adapterPosition)
+                    /*
+                    itemList.removeAt(adapterPosition)
                     notifyItemRemoved(adapterPosition)
-                    notifyItemRangeChanged(adapterPosition,exampleList.size)
-                    println("onMenuItemClick: action_popup_delete @ $adapterPosition")
+                    notifyItemRangeChanged(adapterPosition,itemList.size)
+                    println("onMenuItemClick: action_popup_delete @ $adapterPosition")*/
                     true
                 }
                 else -> false
@@ -70,5 +73,9 @@ class RecyclerViewAdapter(private var exampleList: ArrayList<ExampleItem>) : Rec
         init {
             imageButton.setOnClickListener(this)
         }
+    }
+    fun setData(item: List<Item>){
+        this.itemList = item
+        notifyDataSetChanged()
     }
 }
