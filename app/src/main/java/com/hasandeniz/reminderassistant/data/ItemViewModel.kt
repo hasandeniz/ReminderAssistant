@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 @InternalCoroutinesApi
 class ItemViewModel(application: Application): AndroidViewModel(application) {
 
-    val readAllData: LiveData<List<Item>>
     val readMondayData: LiveData<List<Item>>
     val readTuesdayData: LiveData<List<Item>>
     val readWednesdayData: LiveData<List<Item>>
@@ -31,12 +30,16 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
         readFridayData = repository.readFridayData
         readSaturdayData = repository.readSaturdayData
         readSundayData = repository.readSundayData
-        readAllData = repository.readAllData
     }
 
     fun addItem(item: Item){
         viewModelScope.launch(Dispatchers.IO) {
             repository.addItem(item)
+        }
+    }
+    fun deleteItem(item: Item){
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteItem(item)
         }
     }
 }
