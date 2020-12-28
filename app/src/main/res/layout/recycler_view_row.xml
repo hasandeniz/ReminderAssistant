@@ -9,7 +9,6 @@
         android:id="@+id/relativeLayoutEdit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="updateItem"
         android:padding="8dp">
 
         <ImageView
@@ -75,7 +74,7 @@
             android:layout_marginEnd="15dp"
             android:background="@color/moreButtonBackground"
             android:contentDescription="@string/more_menu"
-            app:srcCompat="@drawable/ic_baseline_more_vert_24" />
+            app:srcCompat="@drawable/ic_baseline_delete_24" />
 
 
     </RelativeLayout>
