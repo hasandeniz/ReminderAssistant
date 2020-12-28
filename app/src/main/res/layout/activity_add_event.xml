@@ -33,7 +33,7 @@
             android:layout_marginRight="17dp"
             android:hint="@string/enter_the_course_name"
             android:importantForAutofill="no"
-            android:inputType="textPersonName"
+            android:inputType="textCapWords"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:textColor="@color/addEventTextHintColor"

@@ -28,8 +28,15 @@ class MainActivity : AppCompatActivity() {
         actionBar!!.title = "Reminder"
         createFragments()
 
-        val tab = tabs.getTabAt(checkDay())
-        tab!!.select()
+
+        if(globalPosition != null){
+            val tab = tabs.getTabAt(globalPosition!!.toInt())
+            tab!!.select()
+        }else{
+            val tab = tabs.getTabAt(checkDay())
+            tab!!.select()
+        }
+
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

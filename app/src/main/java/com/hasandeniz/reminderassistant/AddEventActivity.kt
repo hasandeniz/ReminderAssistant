@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-
+var globalPosition:String? = null
 class AddEventActivity : AppCompatActivity() {
     lateinit var courseName : String
     lateinit var className : String
@@ -93,42 +93,49 @@ class AddEventActivity : AppCompatActivity() {
             when (intent.getIntExtra("position",-1)) {
                 0 -> {
                     date = "Monday"
+                    globalPosition = 0.toString()
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
                     Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 1 -> {
                     date = "Tuesday"
+                    globalPosition = 1.toString()
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
                     Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 2 -> {
                     date = "Wednesday"
+                    globalPosition = 2.toString()
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
                     Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 3 -> {
                     date = "Thursday"
+                    globalPosition = 3.toString()
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
                     Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 4 -> {
                     date = "Friday"
+                    globalPosition = 4.toString()
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
                     Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 5 -> {
                     date = "Saturday"
+                    globalPosition = 5.toString()
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
                     Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 6 -> {
                     date = "Sunday"
+                    globalPosition = 6.toString()
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
                     Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
