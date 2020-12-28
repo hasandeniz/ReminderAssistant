@@ -35,7 +35,7 @@ class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHol
         return itemList.size
     }
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var textView1: TextView = itemView.findViewById(R.id.textView1)
         var textView2: TextView = itemView.findViewById(R.id.textView2)
         var imageText1: TextView = itemView.findViewById(R.id.imageTextUp)
@@ -43,33 +43,12 @@ class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHol
         var imageButton: ImageButton = itemView.findViewById(R.id.popupMenuButton)
 
         override fun onClick(v: View) {
-            showPopupMenu(v)
+            //delete item code
         }
 
-        private fun showPopupMenu(view: View) {
-            val popupMenu = PopupMenu(view.context, view)
-            popupMenu.inflate(R.menu.popup_menu)
-            popupMenu.setOnMenuItemClickListener(this)
-            popupMenu.show()
-        }
 
-        override fun onMenuItemClick(item: MenuItem): Boolean {
-            return when (item.itemId) {
-                R.id.actionPopupEdit -> {
-                    println("onMenuItemClick: action_popup_edit @ $adapterPosition")
-                    true
-                }
-                R.id.actionPopupDelete -> {
-                    /*
-                    itemList.removeAt(adapterPosition)
-                    notifyItemRemoved(adapterPosition)
-                    notifyItemRangeChanged(adapterPosition,itemList.size)
-                    println("onMenuItemClick: action_popup_delete @ $adapterPosition")*/
-                    true
-                }
-                else -> false
-            }
-        }
+
+
         init {
             imageButton.setOnClickListener(this)
         }
