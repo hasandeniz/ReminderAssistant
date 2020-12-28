@@ -1,6 +1,7 @@
 package com.hasandeniz.reminderassistant.adapters
 
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -8,14 +9,20 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.hasandeniz.reminderassistant.R
 import com.hasandeniz.reminderassistant.data.Item
+import com.hasandeniz.reminderassistant.data.ItemViewModel
+import kotlinx.coroutines.InternalCoroutinesApi
+import java.util.*
+
 
 
 class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
-
-    private var itemList = emptyList<Item>()
+    private var itemList: MutableList<Item> = Collections.emptyList()
+    private lateinit var listener: ItemListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_row, parent, false)
@@ -28,6 +35,10 @@ class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHol
         holder.textView2.text = currentItem.className
         holder.imageText1.text = currentItem.startTime
         holder.imageText2.text = currentItem.finishTime
+        holder.imageButton.setOnClickListener(View.OnClickListener { view ->
+            listener.onItemClicked(currentItem, position)
+            notifyDataSetChanged()
+        })
 
     }
 
@@ -35,26 +46,22 @@ class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHol
         return itemList.size
     }
 
-    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var textView1: TextView = itemView.findViewById(R.id.textView1)
         var textView2: TextView = itemView.findViewById(R.id.textView2)
         var imageText1: TextView = itemView.findViewById(R.id.imageTextUp)
         var imageText2: TextView = itemView.findViewById(R.id.imageTextDown)
         var imageButton: ImageButton = itemView.findViewById(R.id.popupMenuButton)
 
-        override fun onClick(v: View) {
-            //delete item code
-        }
-
-
-
-
-        init {
-            imageButton.setOnClickListener(this)
-        }
     }
-    fun setData(item: List<Item>){
+    fun setData(item: MutableList<Item>){
         this.itemList = item
         notifyDataSetChanged()
+    }
+    interface ItemListener {
+        fun onItemClicked(item: Item, position: Int)
+    }
+    fun setListener(listener: ItemListener) {
+        this.listener = listener;
     }
 }

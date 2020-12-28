@@ -95,43 +95,43 @@ class AddEventActivity : AppCompatActivity() {
                     date = "Monday"
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 1 -> {
                     date = "Tuesday"
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 2 -> {
                     date = "Wednesday"
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 3 -> {
                     date = "Thursday"
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 4 -> {
                     date = "Friday"
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 5 -> {
                     date = "Saturday"
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
                 6 -> {
                     date = "Sunday"
                     val item = Item(0,courseName,className,startTime,finishTime,date)
                     mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                 }
             }
             startActivity(mainIntent)

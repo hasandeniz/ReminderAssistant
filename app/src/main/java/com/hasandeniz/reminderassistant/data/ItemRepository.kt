@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 
 class ItemRepository(private val itemDao: ItemDao) {
 
-    val readAllData: LiveData<List<Item>> = itemDao.readAllData()
     val readMondayData: LiveData<List<Item>> = itemDao.readMonday()
     val readTuesdayData: LiveData<List<Item>> = itemDao.readTuesday()
     val readWednesdayData: LiveData<List<Item>> = itemDao.readWednesday()
@@ -16,5 +15,8 @@ class ItemRepository(private val itemDao: ItemDao) {
 
     suspend fun addItem(item: Item){
         itemDao.addItem(item)
+    }
+    suspend fun deleteItem(item: Item){
+        itemDao.deleteItem(item)
     }
 }
