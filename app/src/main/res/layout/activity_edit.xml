@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/courseNameText"
+            android:id="@+id/courseNameTextEdit"
             android:layout_width="93dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
@@ -25,8 +25,8 @@
             android:textColor="@color/addEventTextColor" />
 
         <EditText
-            android:id="@+id/courseNameInput"
-            android:layout_width="match_parent"
+            android:id="@+id/courseNameInputEdit"
+            android:layout_width="366dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
             android:layout_marginTop="3dp"
@@ -41,7 +41,7 @@
             android:textColorLink="@color/colorAccent" />
 
         <TextView
-            android:id="@+id/classNameText"
+            android:id="@+id/classNameTextEdit"
             android:layout_width="93dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
@@ -50,8 +50,8 @@
             android:textColor="@color/addEventTextColor" />
 
         <EditText
-            android:id="@+id/classNameInput"
-            android:layout_width="match_parent"
+            android:id="@+id/classNameInputEdit"
+            android:layout_width="368dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
             android:layout_marginTop="3dp"
@@ -68,21 +68,19 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayoutEdit"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <Button
-            android:id="@+id/startTimeButton"
+            android:id="@+id/startTimeButtonEdit"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="205dp"
+            android:layout_height="60dp"
             android:layout_marginTop="15dp"
             android:backgroundTint="@color/editTextDesignColor"
             android:onClick="startTime"
@@ -90,11 +88,10 @@
             android:textColor="@color/addEventTextColor" />
 
         <Button
-            android:id="@+id/finishTimeButton"
+            android:id="@+id/finishTimeButtonEdit"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="205dp"
+            android:layout_height="60dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="17dp"
             android:backgroundTint="@color/editTextDesignColor"
@@ -115,7 +112,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/cancelButton"
+            android:id="@+id/cancelButtonEdit"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="112dp"
             android:layout_height="64dp"
@@ -130,7 +127,7 @@
             android:layout_weight="1" />
 
         <Button
-            android:id="@+id/saveButton"
+            android:id="@+id/saveButtonEdit"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="112dp"
             android:layout_height="64dp"
