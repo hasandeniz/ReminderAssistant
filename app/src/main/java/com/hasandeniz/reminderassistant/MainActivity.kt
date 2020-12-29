@@ -59,7 +59,8 @@ class MainActivity : AppCompatActivity() {
             R.id.actionAddEvent -> {
                 val position: Int = tabs.selectedTabPosition
                 val intent = Intent(this, AddEventActivity::class.java)
-                intent.putExtra("position", position)
+                intent.putExtra("tabPosition", position)
+                println(position)
                 startActivity(intent)
 
 

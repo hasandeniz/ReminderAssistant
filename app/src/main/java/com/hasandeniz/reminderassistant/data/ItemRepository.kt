@@ -19,4 +19,7 @@ class ItemRepository(private val itemDao: ItemDao) {
     suspend fun deleteItem(item: Item){
         itemDao.deleteItem(item)
     }
+    suspend fun updateItem(item: Item){
+        itemDao.updateItem(item)
+    }
 }

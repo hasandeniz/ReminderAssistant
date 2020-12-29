@@ -34,10 +34,20 @@ class AddEventActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.hide()
         setContentView(R.layout.activity_add_event)
-        courseName = ""
-        className = ""
-        startTime = ""
-        finishTime = ""
+        if (intent.getBooleanExtra("isEdit",false)){
+            courseNameInput.setText(intent.getStringExtra("courseName"))
+            classNameInput.setText(intent.getStringExtra("className"))
+            startTime = intent.getStringExtra("startTime").toString()
+            finishTime = intent.getStringExtra("finishTime").toString()
+            startTimeButton.text = "Start Time: " +startTime
+            finishTimeButton.text = "Finish Time: " + finishTime
+        }else{
+            courseName = ""
+            className = ""
+            startTime = ""
+            finishTime = ""
+        }
+
         check()
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
 
@@ -90,63 +100,114 @@ class AddEventActivity : AppCompatActivity() {
             builder.setNeutralButton("OK"){ dialogInterface: DialogInterface, i: Int -> }
             builder.show()
         }else{
-            when (intent.getIntExtra("position",-1)) {
-                0 -> {
-                    date = "Monday"
-                    globalPosition = 0.toString()
-                    val item = Item(0,courseName,className,startTime,finishTime,date)
-                    mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
+            if (intent.getIntExtra("editPosition",-1) != -1){
+                when (intent.getIntExtra("editPosition",-1)) {
+                    0 -> {
+                        date = "Monday"
+                        globalPosition = 0.toString()
+                        updateItem(date)
+                    }
+                    1 -> {
+                        date = "Tuesday"
+                        globalPosition = 1.toString()
+                        updateItem(date)
+                    }
+                    2 -> {
+                        date = "Wednesday"
+                        globalPosition = 2.toString()
+                        updateItem(date)
+                    }
+                    3 -> {
+                        date = "Thursday"
+                        globalPosition = 3.toString()
+                        updateItem(date)
+                    }
+                    4 -> {
+                        date = "Friday"
+                        globalPosition = 4.toString()
+                        updateItem(date)
+                    }
+                    5 -> {
+                        date = "Saturday"
+                        globalPosition = 5.toString()
+                        updateItem(date)
+                    }
+                    6 -> {
+                        date = "Sunday"
+                        globalPosition = 6.toString()
+                        updateItem(date)
+                    }
                 }
-                1 -> {
-                    date = "Tuesday"
-                    globalPosition = 1.toString()
-                    val item = Item(0,courseName,className,startTime,finishTime,date)
-                    mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
-                }
-                2 -> {
-                    date = "Wednesday"
-                    globalPosition = 2.toString()
-                    val item = Item(0,courseName,className,startTime,finishTime,date)
-                    mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
-                }
-                3 -> {
-                    date = "Thursday"
-                    globalPosition = 3.toString()
-                    val item = Item(0,courseName,className,startTime,finishTime,date)
-                    mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
-                }
-                4 -> {
-                    date = "Friday"
-                    globalPosition = 4.toString()
-                    val item = Item(0,courseName,className,startTime,finishTime,date)
-                    mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
-                }
-                5 -> {
-                    date = "Saturday"
-                    globalPosition = 5.toString()
-                    val item = Item(0,courseName,className,startTime,finishTime,date)
-                    mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
-                }
-                6 -> {
-                    date = "Sunday"
-                    globalPosition = 6.toString()
-                    val item = Item(0,courseName,className,startTime,finishTime,date)
-                    mItemViewModel.addItem(item)
-                    Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
+
+            }else{
+                when (intent.getIntExtra("tabPosition",-1)) {
+                    0 -> {
+                        date = "Monday"
+                        globalPosition = 0.toString()
+                        val item = Item(0,courseName,className,startTime,finishTime,date)
+                        mItemViewModel.addItem(item)
+                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
+                    }
+                    1 -> {
+                        date = "Tuesday"
+                        globalPosition = 1.toString()
+                        val item = Item(0,courseName,className,startTime,finishTime,date)
+                        mItemViewModel.addItem(item)
+                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
+                    }
+                    2 -> {
+                        date = "Wednesday"
+                        globalPosition = 2.toString()
+                        val item = Item(0,courseName,className,startTime,finishTime,date)
+                        mItemViewModel.addItem(item)
+                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
+                    }
+                    3 -> {
+                        date = "Thursday"
+                        globalPosition = 3.toString()
+                        val item = Item(0,courseName,className,startTime,finishTime,date)
+                        mItemViewModel.addItem(item)
+                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
+                    }
+                    4 -> {
+                        date = "Friday"
+                        globalPosition = 4.toString()
+                        val item = Item(0,courseName,className,startTime,finishTime,date)
+                        mItemViewModel.addItem(item)
+                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
+                    }
+                    5 -> {
+                        date = "Saturday"
+                        globalPosition = 5.toString()
+                        val item = Item(0,courseName,className,startTime,finishTime,date)
+                        mItemViewModel.addItem(item)
+                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
+                    }
+                    6 -> {
+                        date = "Sunday"
+                        globalPosition = 6.toString()
+                        val item = Item(0,courseName,className,startTime,finishTime,date)
+                        mItemViewModel.addItem(item)
+                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
             startActivity(mainIntent)
         }
-
     }
     fun cancelButton(view: View) {
         finish()
+    }
+
+    @InternalCoroutinesApi
+    fun updateItem(date: String){
+        val courseName = courseName
+        val className = className
+        val startTime = startTime
+        val finishTime = finishTime
+        val id = intent.getIntExtra("id",-1)
+        val newItem = Item(id,courseName,className,startTime,finishTime,date)
+        mItemViewModel.updateItem(newItem)
     }
 
 }
