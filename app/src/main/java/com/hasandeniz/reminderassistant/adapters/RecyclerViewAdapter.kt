@@ -1,28 +1,26 @@
 package com.hasandeniz.reminderassistant.adapters
 
 
-import android.app.AlertDialog
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.hasandeniz.reminderassistant.R
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
+import com.hasandeniz.reminderassistant.fragments.FridayFragment
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
 
 
 
-class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
+class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
     private var itemList: MutableList<Item> = Collections.emptyList()
     private lateinit var listener: ItemListener
+    private lateinit var editListener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_row, parent, false)
@@ -39,6 +37,11 @@ class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHol
             listener.onItemClicked(currentItem, position)
             notifyDataSetChanged()
         })
+        holder.itemView.setOnClickListener(View.OnClickListener { view ->
+            editListener.onEditItemClicked(currentItem, position)
+            notifyDataSetChanged()
+        })
+
 
     }
 
@@ -53,15 +56,25 @@ class RecyclerViewAdapter() : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHol
         var imageText2: TextView = itemView.findViewById(R.id.imageTextDown)
         var imageButton: ImageButton = itemView.findViewById(R.id.popupMenuButton)
 
+
+
     }
     fun setData(item: MutableList<Item>){
         this.itemList = item
         notifyDataSetChanged()
     }
+    //for delete button
     interface ItemListener {
         fun onItemClicked(item: Item, position: Int)
     }
     fun setListener(listener: ItemListener) {
-        this.listener = listener;
+        this.listener = listener
+    }
+    //for item itself
+    interface OnItemClickListener{
+        fun onEditItemClicked(item: Item, position: Int)
+    }
+    fun setEditItemClickListener(editListener: OnItemClickListener){
+        this.editListener = editListener
     }
 }

@@ -32,4 +32,7 @@ interface ItemDao {
 
     @Delete
     suspend fun deleteItem(item:Item)
+
+    @Update
+    suspend fun updateItem(item: Item)
 }
