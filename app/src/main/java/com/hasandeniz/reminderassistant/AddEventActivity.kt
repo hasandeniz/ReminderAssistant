@@ -1,7 +1,11 @@
 package com.hasandeniz.reminderassistant
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.AlarmManager.RTC_WAKEUP
+import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,13 +13,16 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.AlarmManagerCompat.setExactAndAllowWhileIdle
 import androidx.lifecycle.ViewModelProvider
+import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
 import kotlinx.android.synthetic.main.activity_add_event.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.atomic.AtomicInteger
 
 
 var globalPosition:String? = null
@@ -27,6 +34,8 @@ class AddEventActivity : AppCompatActivity() {
     private lateinit var date : String
     @InternalCoroutinesApi
     private lateinit var mItemViewModel: ItemViewModel
+    private lateinit var  item: Item
+    var myId = AtomicInteger()
 
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,12 +43,14 @@ class AddEventActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.hide()
         setContentView(R.layout.activity_add_event)
+
+
         if (intent.getBooleanExtra("isEdit",false)){
             courseNameInput.setText(intent.getStringExtra("courseName"))
             classNameInput.setText(intent.getStringExtra("className"))
             startTime = intent.getStringExtra("startTime").toString()
             finishTime = intent.getStringExtra("finishTime").toString()
-            startTimeButton.text = "Start Time: " +startTime
+            startTimeButton.text = "Start Time: " + startTime
             finishTimeButton.text = "Finish Time: " + finishTime
         }else{
             courseName = ""
@@ -92,7 +103,6 @@ class AddEventActivity : AppCompatActivity() {
         courseName = courseNameInput.text.toString()
         className = classNameInput.text.toString()
         val mainIntent = Intent(this,MainActivity::class.java)
-
         if (courseName == "" || className == ""){
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Warning!")
@@ -101,6 +111,7 @@ class AddEventActivity : AppCompatActivity() {
             builder.show()
         }else{
             if (intent.getIntExtra("editPosition",-1) != -1){
+                //cancelAlarm()
                 when (intent.getIntExtra("editPosition",-1)) {
                     0 -> {
                         date = "Monday"
@@ -137,61 +148,55 @@ class AddEventActivity : AppCompatActivity() {
                         globalPosition = 6.toString()
                         updateItem(date)
                     }
-                }
 
+                }
             }else{
+
                 when (intent.getIntExtra("tabPosition",-1)) {
                     0 -> {
                         date = "Monday"
                         globalPosition = 0.toString()
-                        val item = Item(0,courseName,className,startTime,finishTime,date)
-                        mItemViewModel.addItem(item)
-                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                     }
                     1 -> {
                         date = "Tuesday"
                         globalPosition = 1.toString()
-                        val item = Item(0,courseName,className,startTime,finishTime,date)
-                        mItemViewModel.addItem(item)
-                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                     }
                     2 -> {
                         date = "Wednesday"
                         globalPosition = 2.toString()
-                        val item = Item(0,courseName,className,startTime,finishTime,date)
-                        mItemViewModel.addItem(item)
-                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                     }
                     3 -> {
                         date = "Thursday"
                         globalPosition = 3.toString()
-                        val item = Item(0,courseName,className,startTime,finishTime,date)
-                        mItemViewModel.addItem(item)
-                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                     }
                     4 -> {
                         date = "Friday"
                         globalPosition = 4.toString()
-                        val item = Item(0,courseName,className,startTime,finishTime,date)
-                        mItemViewModel.addItem(item)
-                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                     }
                     5 -> {
                         date = "Saturday"
                         globalPosition = 5.toString()
-                        val item = Item(0,courseName,className,startTime,finishTime,date)
-                        mItemViewModel.addItem(item)
-                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                     }
                     6 -> {
                         date = "Sunday"
                         globalPosition = 6.toString()
-                        val item = Item(0,courseName,className,startTime,finishTime,date)
-                        mItemViewModel.addItem(item)
-                        Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
                     }
                 }
+                item = Item(myId.get(),courseName,className,startTime,finishTime,date)
+                mItemViewModel.addItem(item)
+                println(myId)
+                Toast.makeText(this,"Successfully added", Toast.LENGTH_LONG).show()
+                val calendar = Calendar.getInstance()
+                val hour = startTime.take(2).toInt()
+                val minute = startTime.takeLast(2).toInt()
+                calendar.set(Calendar.HOUR_OF_DAY, hour)
+                calendar.set(Calendar.MINUTE, minute)
+                calendar.set(Calendar.SECOND, 0)
+                startAlarm(calendar,myId.get())
+                myId.incrementAndGet()
+                println(myId)
             }
+
             startActivity(mainIntent)
         }
     }
@@ -208,6 +213,30 @@ class AddEventActivity : AppCompatActivity() {
         val id = intent.getIntExtra("id",-1)
         val newItem = Item(id,courseName,className,startTime,finishTime,date)
         mItemViewModel.updateItem(newItem)
+
+        val calendar = Calendar.getInstance()
+        val hour = startTime.take(2).toInt()
+        val minute = startTime.takeLast(2).toInt()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
+        calendar.set(Calendar.SECOND, 0)
+        startAlarm(calendar,id)
     }
+
+    private fun startAlarm(calendar: Calendar,id: Int) {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0)
+        //alarmManager.setExact(RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+        alarmManager.setRepeating(RTC_WAKEUP, calendar.timeInMillis,1000 * 60 * 10080, pendingIntent)
+    }
+    private fun cancelAlarm(){
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0 , intent, 0)
+        alarmManager.cancel(pendingIntent)
+    }
+
+
 
 }

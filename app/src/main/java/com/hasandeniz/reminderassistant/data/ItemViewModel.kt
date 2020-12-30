@@ -30,6 +30,7 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
         readFridayData = repository.readFridayData
         readSaturdayData = repository.readSaturdayData
         readSundayData = repository.readSundayData
+
     }
 
     fun addItem(item: Item){
@@ -47,4 +48,5 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
             repository.updateItem(item)
         }
     }
-}
+
+    }
