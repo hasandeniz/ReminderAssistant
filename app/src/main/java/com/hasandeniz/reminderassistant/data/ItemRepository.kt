@@ -12,7 +12,6 @@ class ItemRepository(private val itemDao: ItemDao) {
     val readSaturdayData: LiveData<List<Item>> = itemDao.readSaturday()
     val readSundayData: LiveData<List<Item>> = itemDao.readSunday()
 
-
     suspend fun addItem(item: Item){
         itemDao.addItem(item)
     }
@@ -22,4 +21,6 @@ class ItemRepository(private val itemDao: ItemDao) {
     suspend fun updateItem(item: Item){
         itemDao.updateItem(item)
     }
+
+
 }

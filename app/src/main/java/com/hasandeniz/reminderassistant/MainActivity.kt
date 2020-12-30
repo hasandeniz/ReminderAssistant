@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                 val position: Int = tabs.selectedTabPosition
                 val intent = Intent(this, AddEventActivity::class.java)
                 intent.putExtra("tabPosition", position)
-                println(position)
                 startActivity(intent)
 
 
