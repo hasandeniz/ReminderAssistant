@@ -16,6 +16,7 @@ import com.hasandeniz.reminderassistant.R
 import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
+import com.hasandeniz.reminderassistant.globalList
 import kotlinx.android.synthetic.main.fragment_monday.view.*
 import kotlinx.coroutines.InternalCoroutinesApi
 
@@ -40,6 +41,17 @@ class MondayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerView
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         mItemViewModel.readMondayData.observe(viewLifecycleOwner, Observer { item ->
             adapter.setData(item as ArrayList<Item>)
+
+        })
+        mItemViewModel.getIdData.observe(viewLifecycleOwner,{item->
+            var globalList2 = listOf<Int>()
+            if(item.isEmpty()){
+                globalList2 = globalList.sorted()
+                globalList[0] = globalList2[6]
+
+            }else {
+                globalList[0] = item[0]
+            }
         })
         return view
     }

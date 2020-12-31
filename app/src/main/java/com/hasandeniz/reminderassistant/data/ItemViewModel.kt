@@ -18,6 +18,7 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
     val readFridayData: LiveData<List<Item>>
     val readSaturdayData: LiveData<List<Item>>
     val readSundayData: LiveData<List<Item>>
+    val getIdData: LiveData<List<Int>>
     private val repository: ItemRepository
 
     init {
@@ -30,7 +31,7 @@ class ItemViewModel(application: Application): AndroidViewModel(application) {
         readFridayData = repository.readFridayData
         readSaturdayData = repository.readSaturdayData
         readSundayData = repository.readSundayData
-
+        getIdData = repository.getIdData
     }
 
     fun addItem(item: Item){
