@@ -44,13 +44,7 @@ class TuesdayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerVie
         mItemViewModel.readTuesdayData.observe(viewLifecycleOwner, Observer { item ->
             adapter.setData(item as ArrayList<Item>)
         })
-        mItemViewModel.getIdData.observe(viewLifecycleOwner,{item->
-            globalId = if(item.isEmpty()) 1
-            else item[0]
-        })
-        mItemViewModel.readAllData.observe(viewLifecycleOwner,{item->
-            globalSize = item.size
-        })
+
         return view
     }
     @InternalCoroutinesApi

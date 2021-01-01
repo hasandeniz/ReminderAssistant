@@ -47,9 +47,38 @@ class MainActivity : AppCompatActivity() {
         }
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
 
+        mItemViewModel.readAllData.observe(this,{ item->
+            if (item.isNotEmpty()){
+                for (data in item){
+                    val calendar = Calendar.getInstance()
+                    val date = data.day
+                    val hour = data.startTime.take(2).toInt()
+                    val minute = data.startTime.takeLast(2).toInt()
+                    val day = checkAlarmDate(date)
+                    calendar.set(Calendar.DAY_OF_WEEK,day)
+                    calendar.set(Calendar.HOUR_OF_DAY, hour)
+                    calendar.set(Calendar.MINUTE, minute)
+                    calendar.set(Calendar.SECOND, 0)
+                    if (calendar.before(Calendar.getInstance())){
+                        calendar.add(Calendar.DATE,7)
+                    }
+                    startAlarm(calendar,data.id)
+                }
+            }
+
+        })
+
 
     }
-
+    private fun startAlarm(calendar: Calendar,id: Int) {
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmIntent = Intent(applicationContext, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, id, alarmIntent, 0)
+        if(calendar.before(Calendar.getInstance())){
+            calendar.add(Calendar.DATE,7)
+        }
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
@@ -143,13 +172,13 @@ class MainActivity : AppCompatActivity() {
     }
     private fun checkAlarmDate(date:String):Int{
         return when (date){
-            "Monday" -> 0
-            "Tuesday" -> 1
-            "Wednesday" -> 2
-            "Thursday" -> 3
-            "Friday" -> 4
-            "Saturday" -> 5
-            "Sunday" -> 6
+            "Monday" -> Calendar.MONDAY
+            "Tuesday" -> Calendar.TUESDAY
+            "Wednesday" -> Calendar.WEDNESDAY
+            "Thursday" -> Calendar.THURSDAY
+            "Friday" -> Calendar.FRIDAY
+            "Saturday" -> Calendar.SATURDAY
+            "Sunday" -> Calendar.SUNDAY
             else -> -1
         }
     }

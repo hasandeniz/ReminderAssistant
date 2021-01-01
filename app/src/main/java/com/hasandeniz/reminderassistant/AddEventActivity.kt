@@ -22,9 +22,9 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import java.text.SimpleDateFormat
 import java.util.*
 
-var globalId : Int? = null
+
 var globalPosition:String? = null
-var globalSize : Int? = null
+
 
 class AddEventActivity : AppCompatActivity() {
 
@@ -183,29 +183,6 @@ class AddEventActivity : AppCompatActivity() {
                 }
                 item = Item(0,courseName,className,startTime,finishTime,date)
                 mItemViewModel.addItem(item)
-                val counterFromPreferences = MyCounterPreferences(this).globalCounter
-
-                if (counterFromPreferences != 0) {
-                    globalId = counterFromPreferences + globalSize!! + 1
-                    println(globalSize)
-                }
-                else if (counterFromPreferences == 0 && globalSize == 0 )
-                    globalId = 1
-                else
-                    globalId = globalId?.plus(1)
-
-                Toast.makeText(this," idItem = $globalId, globalCounter = $counterFromPreferences ", Toast.LENGTH_LONG).show()
-
-                val calendar = Calendar.getInstance()
-                val hour = startTime.take(2).toInt()
-                val minute = startTime.takeLast(2).toInt()
-                calendar.set(Calendar.HOUR_OF_DAY, hour)
-                calendar.set(Calendar.MINUTE, minute)
-                calendar.set(Calendar.SECOND, 0)
-
-                startAlarm(calendar, globalId!!)
-
-              
             }
             startActivity(mainIntent)
         }
@@ -224,26 +201,6 @@ class AddEventActivity : AppCompatActivity() {
         val newItem = Item(id,courseName,className,startTime,finishTime,date)
         mItemViewModel.updateItem(newItem)
 
-        val calendar = Calendar.getInstance()
-        val hour = startTime.take(2).toInt()
-        val minute = startTime.takeLast(2).toInt()
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, minute)
-        calendar.set(Calendar.SECOND, 0)
-        startAlarm(calendar,id)
     }
-
-    private fun startAlarm(calendar: Calendar,id: Int) {
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val alarmIntent = Intent(this, AlarmReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(applicationContext, id, alarmIntent, 0)
-        if(calendar.before(Calendar.getInstance())){
-            calendar.add(Calendar.DATE,7)
-        }
-        alarmManager.setRepeating(RTC_WAKEUP,calendar.timeInMillis, 1000*60*10080,pendingIntent)
-    }
-
-
-
 }
 
