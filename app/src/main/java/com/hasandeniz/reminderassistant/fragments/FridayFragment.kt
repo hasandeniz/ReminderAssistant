@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,8 @@ import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
 import kotlinx.android.synthetic.main.fragment_friday.view.*
 import kotlinx.coroutines.InternalCoroutinesApi
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FridayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerViewAdapter.OnItemClickListener {
@@ -43,13 +46,7 @@ class FridayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerView
         mItemViewModel.readFridayData.observe(viewLifecycleOwner, Observer { item ->
             adapter.setData(item as ArrayList<Item>)
         })
-        mItemViewModel.getIdData.observe(viewLifecycleOwner,{item->
-            globalId = if(item.isEmpty()) 1
-            else item[0]
-        })
-        mItemViewModel.readAllData.observe(viewLifecycleOwner,{item->
-            globalSize = item.size
-        })
+
         return view
     }
     @InternalCoroutinesApi
