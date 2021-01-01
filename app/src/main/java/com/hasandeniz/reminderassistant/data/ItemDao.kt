@@ -10,6 +10,9 @@ interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addItem(item: Item)
 
+    @Query("SELECT * FROM item_table" )
+    fun readAll(): LiveData<List<Item>>
+
     @Query("SELECT id FROM item_table ORDER BY id DESC LIMIT 1")
     fun getId(): LiveData<List<Int>>
 

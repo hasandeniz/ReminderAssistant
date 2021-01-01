@@ -13,6 +13,7 @@ class ItemRepository(private val itemDao: ItemDao) {
     val readSaturdayData: LiveData<List<Item>> = itemDao.readSaturday()
     val readSundayData: LiveData<List<Item>> = itemDao.readSunday()
     val getIdData: LiveData<List<Int>> = itemDao.getId()
+    val readAllData: LiveData<List<Item>> = itemDao.readAll()
 
     suspend fun addItem(item: Item){
         itemDao.addItem(item)

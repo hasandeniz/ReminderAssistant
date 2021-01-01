@@ -5,13 +5,15 @@ import androidx.preference.PreferenceManager
 
 class MyPreferences(context: Context?) {
 
-    companion object {
-        private const val DARK_STATUS = "io.github.manuelernesto.DARK_STATUS"
-    }
-
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+    var darkMode = preferences.getInt("a", 0)
+        set(value) = preferences.edit().putInt("a", value).apply()
 
-    var darkMode = preferences.getInt(DARK_STATUS, 0)
-        set(value) = preferences.edit().putInt(DARK_STATUS, value).apply()
+}
+
+class MyCounterPreferences(context: Context?){
+    private val myPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    var globalCounter = myPreferences.getInt("counter",0)
+        set(value) = myPreferences.edit().putInt("counter",value).apply()
 
 }
