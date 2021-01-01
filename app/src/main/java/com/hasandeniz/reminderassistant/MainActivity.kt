@@ -67,8 +67,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-
-
     }
     private fun startAlarm(calendar: Calendar,id: Int) {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager

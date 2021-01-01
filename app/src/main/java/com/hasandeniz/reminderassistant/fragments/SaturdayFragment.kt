@@ -18,6 +18,7 @@ import com.hasandeniz.reminderassistant.*
 import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
+import kotlinx.android.synthetic.main.fragment_friday.*
 import kotlinx.android.synthetic.main.fragment_saturday.view.*
 import kotlinx.coroutines.InternalCoroutinesApi
 
@@ -42,6 +43,9 @@ class SaturdayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerVi
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         mItemViewModel.readSaturdayData.observe(viewLifecycleOwner, Observer { item ->
             adapter.setData(item as ArrayList<Item>)
+            if(item.isNotEmpty()){
+                animationView.visibility = View.INVISIBLE
+            }
         })
 
         return view
