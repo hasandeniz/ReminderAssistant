@@ -11,10 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hasandeniz.reminderassistant.*
+import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
@@ -43,9 +45,11 @@ class MondayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerView
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         mItemViewModel.readMondayData.observe(viewLifecycleOwner, Observer { item ->
             adapter.setData(item as ArrayList<Item>)
-            if(item.isNotEmpty()){
+            if(item.isNotEmpty())
                 animationView.visibility = View.INVISIBLE
-            }
+            else
+                animationView.visibility = View.VISIBLE
+
         })
 
         return view

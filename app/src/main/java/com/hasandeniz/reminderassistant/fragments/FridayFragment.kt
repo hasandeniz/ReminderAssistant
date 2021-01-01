@@ -11,12 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.lottie.LottieAnimationView
 import com.hasandeniz.reminderassistant.*
 import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
@@ -24,7 +22,6 @@ import com.hasandeniz.reminderassistant.data.ItemViewModel
 import kotlinx.android.synthetic.main.fragment_friday.*
 import kotlinx.android.synthetic.main.fragment_friday.view.*
 import kotlinx.coroutines.InternalCoroutinesApi
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -49,7 +46,10 @@ class FridayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerView
             adapter.setData(item as ArrayList<Item>)
             if(item.isNotEmpty()){
                 animationView.visibility = View.INVISIBLE
-            }
+            }else
+                animationView.visibility = View.VISIBLE
+
+
         })
 
         return view

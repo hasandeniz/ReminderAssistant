@@ -44,10 +44,10 @@ class TuesdayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerVie
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         mItemViewModel.readTuesdayData.observe(viewLifecycleOwner, Observer { item ->
             adapter.setData(item as ArrayList<Item>)
-            if(item.isNotEmpty()){
+            if(item.isNotEmpty())
                 animationView.visibility = View.INVISIBLE
-
-            }
+            else
+                animationView.visibility = View.VISIBLE
         })
 
         return view

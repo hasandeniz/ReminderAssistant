@@ -1,6 +1,7 @@
 package com.hasandeniz.reminderassistant.notify
 
 import android.annotation.TargetApi
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -28,16 +29,14 @@ class  NotificationUtils(base: Context) : ContextWrapper(base) {
         }
     }
 
-    // Create channel for Android version 26+
     @TargetApi(Build.VERSION_CODES.O)
     private fun createChannels() {
         val channel = NotificationChannel(MYCHANNEL_ID, MYCHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
         channel.enableVibration(true)
-
+        channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         getManager().createNotificationChannel(channel)
     }
 
-    // Get Manager
     fun getManager() : NotificationManager {
         if (manager == null) manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         return manager as NotificationManager
@@ -56,5 +55,6 @@ class  NotificationUtils(base: Context) : ContextWrapper(base) {
             .setContentIntent(pendingIntent)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setAutoCancel(true)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
     }
 }
