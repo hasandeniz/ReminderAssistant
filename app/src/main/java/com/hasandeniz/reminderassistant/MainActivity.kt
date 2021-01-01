@@ -1,6 +1,9 @@
 package com.hasandeniz.reminderassistant
 
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -9,16 +12,22 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
+import com.hasandeniz.reminderassistant.data.ItemViewModel
 import com.hasandeniz.reminderassistant.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: FragmentAdapter
+    @InternalCoroutinesApi
+    private lateinit var mItemViewModel: ItemViewModel
 
+    @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -36,9 +45,11 @@ class MainActivity : AppCompatActivity() {
             val tab = tabs.getTabAt(checkDay())
             tab!!.select()
         }
+        mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
 
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
@@ -47,13 +58,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.actionCalendar -> {
-                println("action calendar clicked")
             }
             R.id.actionNightMode -> {
                 chooseThemeDialog()
             }
             R.id.actionNotifications -> {
-                println("action notification clicked")
 
             }
             R.id.actionAddEvent -> {
@@ -130,6 +139,18 @@ class MainActivity : AppCompatActivity() {
             Calendar.SATURDAY -> 5
             Calendar.SUNDAY -> 6
             else -> 0
+        }
+    }
+    private fun checkAlarmDate(date:String):Int{
+        return when (date){
+            "Monday" -> 0
+            "Tuesday" -> 1
+            "Wednesday" -> 2
+            "Thursday" -> 3
+            "Friday" -> 4
+            "Saturday" -> 5
+            "Sunday" -> 6
+            else -> -1
         }
     }
 

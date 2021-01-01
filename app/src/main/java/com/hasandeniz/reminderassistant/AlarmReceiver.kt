@@ -8,7 +8,6 @@ import io.karn.notify.Notify
 
 class AlarmReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
-        println("dneeme")
         val notificationUtils = NotificationUtils(context)
         val notification = notificationUtils.getNotificationBuilder().build()
         notificationUtils.getManager().notify(150, notification)
