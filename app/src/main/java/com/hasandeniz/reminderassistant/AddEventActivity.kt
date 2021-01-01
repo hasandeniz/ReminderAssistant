@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
@@ -149,6 +150,7 @@ class AddEventActivity : AppCompatActivity() {
                     }
 
                 }
+                Toast.makeText(this, "Successfully updated",Toast.LENGTH_SHORT).show()
             }else{
 
                 when (intent.getIntExtra("tabPosition",-1)) {
@@ -183,6 +185,7 @@ class AddEventActivity : AppCompatActivity() {
                 }
                 item = Item(0,courseName,className,startTime,finishTime,date)
                 mItemViewModel.addItem(item)
+                Toast.makeText(this, "Successfully added",Toast.LENGTH_SHORT).show()
             }
             startActivity(mainIntent)
         }

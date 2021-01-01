@@ -8,13 +8,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.tabs.TabLayout
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.data.ItemViewModel
 import com.hasandeniz.reminderassistant.fragments.*
@@ -75,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         if(calendar.before(Calendar.getInstance())){
             calendar.add(Calendar.DATE,7)
         }
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
@@ -84,21 +81,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.actionCalendar -> {
-            }
             R.id.actionNightMode -> {
                 chooseThemeDialog()
-            }
-            R.id.actionNotifications -> {
-
             }
             R.id.actionAddEvent -> {
                 val position: Int = tabs.selectedTabPosition
                 val intent = Intent(this, AddEventActivity::class.java)
                 intent.putExtra("tabPosition", position)
                 startActivity(intent)
-
-
             }
         }
         return super.onOptionsItemSelected(item)
