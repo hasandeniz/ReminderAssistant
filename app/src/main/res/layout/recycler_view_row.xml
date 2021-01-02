@@ -34,16 +34,18 @@
                     android:id="@+id/imageTextUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
                     android:text="@string/_12_00"
-                    android:textColor="@color/customIconColor"
+                    android:textColor="@color/customTimeTextColor"
                     android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/imageTextDown"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
                     android:text="@string/_12_00"
-                    android:textColor="@color/customIconColor"
+                    android:textColor="@color/customTimeTextColor"
                     android:textSize="18sp" />
             </LinearLayout>
 

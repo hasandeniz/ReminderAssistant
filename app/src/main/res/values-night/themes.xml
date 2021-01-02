@@ -6,4 +6,5 @@
     <color name="customBackgroundColor">#000000</color>
     <color name="customAppNameColor">#9e9e9e</color>
     <color name="customTimeTextColor">@color/silver</color>
+    <color name="customIconColor">#B986FC</color>
 </resources>
