@@ -14,5 +14,5 @@
     <color name="addEventTextColor">@color/afwhite</color>
     <color name="addEventTextHintColor">@color/silver</color>
     <color name="editTextDesignColor">@color/white</color>
-    <color name="moreButtonBackground">@color/cardview_dark_background</color>
+    <color name="deleteButtonBackground">@color/cardview_dark_background</color>
 </resources>

@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/customBackgroundColor"
         tools:listitem="@layout/recycler_view_row" />
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"

@@ -1,4 +1,4 @@
-package com.hasandeniz.reminderassistant
+package com.hasandeniz.reminderassistant.data
 
 import android.content.Context
 import androidx.preference.PreferenceManager

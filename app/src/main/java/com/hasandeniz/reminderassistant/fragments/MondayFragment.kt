@@ -11,15 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hasandeniz.reminderassistant.*
-import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
+import com.hasandeniz.reminderassistant.data.MyCounterPreferences
+import com.hasandeniz.reminderassistant.notify.AlarmReceiver
 import kotlinx.android.synthetic.main.fragment_friday.*
 import kotlinx.android.synthetic.main.fragment_monday.view.*
 import kotlinx.coroutines.InternalCoroutinesApi
