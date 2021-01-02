@@ -6,13 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.hasandeniz.reminderassistant.R
 import com.hasandeniz.reminderassistant.data.Item
-import com.hasandeniz.reminderassistant.data.ItemViewModel
-import com.hasandeniz.reminderassistant.fragments.FridayFragment
-import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
 
 
@@ -54,7 +50,7 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolde
         var textView2: TextView = itemView.findViewById(R.id.textView2)
         var imageText1: TextView = itemView.findViewById(R.id.imageTextUp)
         var imageText2: TextView = itemView.findViewById(R.id.imageTextDown)
-        var imageButton: ImageButton = itemView.findViewById(R.id.popupMenuButton)
+        var imageButton: ImageButton = itemView.findViewById(R.id.deleteItemButton)
 
 
 

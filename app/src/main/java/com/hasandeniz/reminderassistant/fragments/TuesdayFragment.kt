@@ -18,8 +18,9 @@ import com.hasandeniz.reminderassistant.*
 import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
+import com.hasandeniz.reminderassistant.data.MyCounterPreferences
+import com.hasandeniz.reminderassistant.notify.AlarmReceiver
 import kotlinx.android.synthetic.main.fragment_friday.*
-import kotlinx.android.synthetic.main.fragment_friday.view.*
 import kotlinx.android.synthetic.main.fragment_tuesday.view.*
 import kotlinx.coroutines.InternalCoroutinesApi
 

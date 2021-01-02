@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -14,7 +15,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.data.ItemViewModel
+import com.hasandeniz.reminderassistant.data.MyPreferences
 import com.hasandeniz.reminderassistant.fragments.*
+import com.hasandeniz.reminderassistant.notify.AlarmReceiver
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
@@ -31,7 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         checkTheme()
         val actionBar = supportActionBar
-        actionBar!!.title = "Reminder"
+        actionBar!!.title = (Html.fromHtml("<font color=\"@color/customAppNameColor\">" + getString(R.string.app_name) + "</font>"))
+
+
         createFragments()
 
 
@@ -81,6 +86,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.actionTable -> {
+
+            }
             R.id.actionNightMode -> {
                 chooseThemeDialog()
             }

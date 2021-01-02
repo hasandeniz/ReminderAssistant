@@ -1,4 +1,4 @@
-package com.hasandeniz.reminderassistant
+package com.hasandeniz.reminderassistant.notify
 
 import android.content.BroadcastReceiver
 import android.content.Context
