@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.choose_theme_text))
-        val styles = arrayOf("Light", "Dark", "System default")
+        val styles = arrayOf(getString(R.string.light), getString(R.string.dark), getString(R.string.systemDefault))
         val checkedItem = MyPreferences(this).darkMode
 
         builder.setSingleChoiceItems(styles, checkedItem) { dialog, which ->
@@ -183,13 +183,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun createFragments(){
         adapter = FragmentAdapter(supportFragmentManager)
-        adapter.addFragment(MondayFragment(), "Monday")
-        adapter.addFragment(TuesdayFragment(), "Tuesday")
-        adapter.addFragment(WednesdayFragment(), "Wednesday")
-        adapter.addFragment(ThursdayFragment(), "Thursday")
-        adapter.addFragment(FridayFragment(), "Friday")
-        adapter.addFragment(SaturdayFragment(), "Saturday")
-        adapter.addFragment(SundayFragment(), "Sunday")
+        adapter.addFragment(MondayFragment(), getString(R.string.monday))
+        adapter.addFragment(TuesdayFragment(), getString(R.string.tuesday))
+        adapter.addFragment(WednesdayFragment(), getString(R.string.wednesday))
+        adapter.addFragment(ThursdayFragment(), getString(R.string.thursday))
+        adapter.addFragment(FridayFragment(), getString(R.string.friday))
+        adapter.addFragment(SaturdayFragment(), getString(R.string.saturday))
+        adapter.addFragment(SundayFragment(), getString(R.string.sunday))
         viewPager.adapter = adapter
         tabs.setupWithViewPager(viewPager)
     }
