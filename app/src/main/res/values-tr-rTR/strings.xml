@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hatırlatıcı</string>
+    <string name="calendar">Takvim</string>
+    <string name="night_mode">Koyu Mod</string>
+    <string name="notification">Bildirim</string>
+    <string name="add_event">Ekle</string>
+    <string name="_12_00">12:00</string>
+    <string name="line_1">Satır 1</string>
+    <string name="line_2">Satır 2</string>
+    <string name="background_for_times">saatler için arkaplan</string>
+    <string name="more_menu">daha fazla menü</string>
+    <string name="change_color">Rengi Değiştir</string>
+    <string name="delete">Kaldır</string>
+    <string name="edit">Düzenle</string>
+    <string name="time_button_default_text">00:00</string>
+    <string name="finish_time">Bitiş Saati</string>
+    <string name="start_time">Başlangıç Saati</string>
+    <string name="class_name">Sınıf Adı</string>
+    <string name="course_name">Ders Adı</string>
+    <string name="enter_the_course_name">Ders adını giriniz…</string>
+    <string name="enter_the_name_of_the_class">Sınıf adını giriniz…</string>
+    <string name="cancel">Vazgeç</string>
+    <string name="save">Kaydet</string>
+    <string name="choose_theme_text">Tema Seç</string>
+    <string name="table">Tablo</string>
+    <string name="action_today">Bu Hafta</string>
+    <string name="action_day_view">Günlük görünüm</string>
+    <string name="action_three_day_view">3 Günlük Görünüm</string>
+    <string name="action_week_view">Haftalık Görünüm</string>
+    <string name="all_day">Tüm gün</string>
+    <string name="untitled_event">İsimsiz</string>
+    <string name="light">Normal</string>
+    <string name="dark">Koyu</string>
+    <string name="systemDefault">Sistem Varsayılan</string>
+    <string name="monday">Pazartesi</string>
+    <string name="tuesday">Salı</string>
+    <string name="wednesday">Çarşamba</string>
+    <string name="friday">Cuma</string>
+    <string name="saturday">Cumartesi</string>
+    <string name="sunday">Pazar</string>
+    <string name="thursday">Perşembe</string>
+</resources>
