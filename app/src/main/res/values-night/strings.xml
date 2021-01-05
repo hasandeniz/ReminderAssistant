@@ -29,4 +29,24 @@
     <string name="action_week_view">Week view</string>
     <string name="all_day">All day</string>
     <string name="untitled_event">Untitled event</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="systemDefault">System Default</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="thursday">Thursday</string>
+    <string name="notificationTitle">Hurry!</string>
+    <string name="notificationText">Course is about to start</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="are_you_sure">Are you sure want to delete?</string>
+    <string name="warning">Warning!</string>
+    <string name="must_be_filled">All areas must be filled!</string>
+    <string name="ok">OK</string>
+
+
 </resources>

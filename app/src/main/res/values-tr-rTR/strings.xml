@@ -11,7 +11,7 @@
     <string name="background_for_times">saatler için arkaplan</string>
     <string name="more_menu">daha fazla menü</string>
     <string name="change_color">Rengi Değiştir</string>
-    <string name="delete">Kaldır</string>
+    <string name="delete">Sil</string>
     <string name="edit">Düzenle</string>
     <string name="time_button_default_text">00:00</string>
     <string name="finish_time">Bitiş Saati</string>
@@ -40,4 +40,13 @@
     <string name="saturday">Cumartesi</string>
     <string name="sunday">Pazar</string>
     <string name="thursday">Perşembe</string>
+    <string name="notificationTitle">Acele et!</string>
+    <string name="notificationText">Ders başlamak üzere</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="are_you_sure">Silmek istediğine emin misin?</string>
+    <string name="warning">Uyarı!</string>
+    <string name="must_be_filled">Tüm alanlar dolu olmalıdır!</string>
+    <string name="ok">Tamam</string>
+
 </resources>

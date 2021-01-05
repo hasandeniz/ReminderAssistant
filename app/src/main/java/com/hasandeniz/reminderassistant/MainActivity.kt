@@ -12,8 +12,11 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
+import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
+import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
 import com.hasandeniz.reminderassistant.data.MyPreferences
 import com.hasandeniz.reminderassistant.fragments.*
@@ -36,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         checkTheme()
         val actionBar = supportActionBar
         actionBar!!.title = (Html.fromHtml("<font color=\"@color/customAppNameColor\">" + getString(R.string.app_name) + "</font>"))
-
 
         createFragments()
 
@@ -193,5 +195,6 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = adapter
         tabs.setupWithViewPager(viewPager)
     }
+
 
 }
