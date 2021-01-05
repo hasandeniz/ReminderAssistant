@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".table.BaseActivity">
+
+    <com.alamkanak.weekview.WeekView
+        android:id="@+id/weekView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:autoLimitTime="false"
+        app:dayBackgroundColor="#05000000"
+        app:headerColumnTextColor="@color/toolbar_text"
+        app:headerRowBackgroundColor="@color/toolbar"
+        app:maxTime="24"
+        app:minOverlappingMinutes="5"
+        app:minTime="0"
+        app:newEventTimeResolutionInMinutes="15"
+        app:noOfVisibleDays="3"
+        app:timeColumnResolution="60"
+        app:todayColumnBackgroundColor="@color/todayColumnBackgroundColor"
+        app:todayHeaderTextColor="@color/accent"
+        app:hourSeparatorColor="@color/hourSeparatorColor"
+        app:untitledEventText="@string/untitled_event"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

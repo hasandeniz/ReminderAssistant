@@ -18,6 +18,7 @@ import com.hasandeniz.reminderassistant.data.ItemViewModel
 import com.hasandeniz.reminderassistant.data.MyPreferences
 import com.hasandeniz.reminderassistant.fragments.*
 import com.hasandeniz.reminderassistant.notify.AlarmReceiver
+import com.hasandeniz.reminderassistant.table.WholeViewSnappingActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
@@ -87,7 +88,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.actionTable -> {
-
+                val intent = Intent(this, WholeViewSnappingActivity::class.java)
+                startActivity(intent)
             }
             R.id.actionNightMode -> {
                 chooseThemeDialog()
