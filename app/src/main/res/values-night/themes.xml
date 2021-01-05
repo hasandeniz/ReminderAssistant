@@ -1,10 +1,12 @@
 <resources>
     <style name="Theme.ReminderAssistant" parent="Theme.MaterialComponents.DayNight">
-
+        <item name="colorPrimary">#354759</item>
+        <item name="colorPrimaryDark">#11161c</item>
 
     </style>
     <color name="customBackgroundColor">#000000</color>
     <color name="customAppNameColor">#9e9e9e</color>
     <color name="customTimeTextColor">@color/silver</color>
-    <color name="customIconColor">#B986FC</color>
+    <color name="customIconColor">#354759</color>
+    <color name="deleteIconColor">#11161c</color>
 </resources>
