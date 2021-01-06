@@ -5,18 +5,18 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
-import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
-import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
 import com.hasandeniz.reminderassistant.data.MyPreferences
 import com.hasandeniz.reminderassistant.fragments.*
@@ -25,6 +25,7 @@ import com.hasandeniz.reminderassistant.table.WholeViewSnappingActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: FragmentAdapter
@@ -35,10 +36,25 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val pIntent = Intent()
+
+
+        val packageName: String = this.packageName
+        val pm:PowerManager = this.getSystemService(Context.POWER_SERVICE) as PowerManager
+        if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+            pIntent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+            pIntent.data = Uri.parse("package:$packageName")
+            startActivity(pIntent)
+        }
+
 
         checkTheme()
         val actionBar = supportActionBar
-        actionBar!!.title = (Html.fromHtml("<font color=\"@color/customAppNameColor\">" + getString(R.string.app_name) + "</font>"))
+        actionBar!!.title = (Html.fromHtml(
+            "<font color=\"@color/customAppNameColor\">" + getString(
+                R.string.app_name
+            ) + "</font>"
+        ))
 
         createFragments()
 
@@ -52,41 +68,44 @@ class MainActivity : AppCompatActivity() {
         }
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
 
-        mItemViewModel.readAllData.observe(this,{ item->
-            if (item.isNotEmpty()){
-                for (data in item){
+        mItemViewModel.readAllData.observe(this, { item ->
+            if (item.isNotEmpty()) {
+                for (data in item) {
                     val calendar = Calendar.getInstance()
                     val date = data.day
                     val hour = data.startTime.take(2).toInt()
                     val minute = data.startTime.takeLast(2).toInt()
                     val day = checkAlarmDate(date)
-                    calendar.set(Calendar.DAY_OF_WEEK,day)
+                    calendar.set(Calendar.DAY_OF_WEEK, day)
                     calendar.set(Calendar.HOUR_OF_DAY, hour)
                     calendar.set(Calendar.MINUTE, minute)
                     calendar.set(Calendar.SECOND, 0)
-                    if (calendar.before(Calendar.getInstance())){
-                        calendar.add(Calendar.DATE,7)
+                    if (calendar.before(Calendar.getInstance())) {
+                        calendar.add(Calendar.DATE, 7)
                     }
-                    startAlarm(calendar,data.id)
+                    startAlarm(calendar, data.id)
                 }
             }
 
         })
     }
-    private fun startAlarm(calendar: Calendar,id: Int) {
+    private fun startAlarm(calendar: Calendar, id: Int) {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(applicationContext, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(this, id, alarmIntent, 0)
         if(calendar.before(Calendar.getInstance())){
-            calendar.add(Calendar.DATE,7)
+            calendar.add(Calendar.DATE, 7)
         }
-        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            pendingIntent
+        )
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.actionTable -> {
@@ -109,7 +128,11 @@ class MainActivity : AppCompatActivity() {
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.choose_theme_text))
-        val styles = arrayOf(getString(R.string.light), getString(R.string.dark), getString(R.string.systemDefault))
+        val styles = arrayOf(
+            getString(R.string.light),
+            getString(R.string.dark),
+            getString(R.string.systemDefault)
+        )
         val checkedItem = MyPreferences(this).darkMode
 
         builder.setSingleChoiceItems(styles, checkedItem) { dialog, which ->
@@ -156,7 +179,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun checkDay():Int{
         val calendar: Calendar = Calendar.getInstance()
         return when (calendar.get(Calendar.DAY_OF_WEEK)) {
@@ -170,7 +192,7 @@ class MainActivity : AppCompatActivity() {
             else -> 0
         }
     }
-    private fun checkAlarmDate(date:String):Int{
+    private fun checkAlarmDate(date: String):Int{
         return when (date){
             "Monday" -> Calendar.MONDAY
             "Tuesday" -> Calendar.TUESDAY
@@ -182,7 +204,6 @@ class MainActivity : AppCompatActivity() {
             else -> -1
         }
     }
-
     private fun createFragments(){
         adapter = FragmentAdapter(supportFragmentManager)
         adapter.addFragment(MondayFragment(), getString(R.string.monday))
@@ -195,6 +216,5 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = adapter
         tabs.setupWithViewPager(viewPager)
     }
-
 
 }
