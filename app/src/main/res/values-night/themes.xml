@@ -9,4 +9,5 @@
     <color name="customTimeTextColor">@color/silver</color>
     <color name="customIconColor">#354759</color>
     <color name="deleteIconColor">#11161c</color>
+    <color name="colorAlertText">@color/silver</color>
 </resources>

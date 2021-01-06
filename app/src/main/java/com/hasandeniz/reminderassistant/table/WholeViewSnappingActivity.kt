@@ -11,15 +11,12 @@ import com.alamkanak.weekview.WeekDaySubtitleInterpreter
 import com.alamkanak.weekview.WeekView
 import com.alamkanak.weekview.WeekViewEvent
 import com.hasandeniz.reminderassistant.R
-import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.coroutines.InternalCoroutinesApi
-
 import java.text.SimpleDateFormat
 import java.util.*
 
 class WholeViewSnappingActivity : TableActivity() {
-    val locale = Locale.getDefault()
-
+    val locale: Locale = Locale.getDefault()
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

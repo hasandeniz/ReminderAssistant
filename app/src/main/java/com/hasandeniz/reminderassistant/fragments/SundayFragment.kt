@@ -2,6 +2,7 @@ package com.hasandeniz.reminderassistant.fragments
 
 import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -10,32 +11,33 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hasandeniz.reminderassistant.*
 import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
+import com.hasandeniz.reminderassistant.databinding.FragmentSundayBinding
 import com.hasandeniz.reminderassistant.notify.AlarmReceiver
-import kotlinx.android.synthetic.main.fragment_friday.*
-import kotlinx.android.synthetic.main.fragment_sunday.view.*
 import kotlinx.coroutines.InternalCoroutinesApi
 
 
-class SundayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerViewAdapter.OnItemClickListener {
+class SundayFragment : Fragment(),RecyclerViewAdapter.DeleteItemListener, RecyclerViewAdapter.OnItemClickListener {
     @InternalCoroutinesApi
     private lateinit var mItemViewModel: ItemViewModel
+    private var _binding: FragmentSundayBinding? = null
+    private val binding get() = _binding!!
     @InternalCoroutinesApi
     override fun onCreateView(
-
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_sunday, container, false)
+    ): View {
+        _binding = FragmentSundayBinding.inflate(inflater, container, false)
+        val view = binding.root
 
         val adapter = RecyclerViewAdapter()
-        val recyclerView = view.recyclerViewSunday
+        val recyclerView = binding.recyclerViewSunday
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter.setListener(this)
@@ -44,9 +46,9 @@ class SundayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerView
         mItemViewModel.readSundayData.observe(viewLifecycleOwner, { item ->
             adapter.setData(item as ArrayList<Item>)
             if(item.isNotEmpty())
-                animationView.visibility = View.INVISIBLE
+                binding.animationView.visibility = View.INVISIBLE
             else
-                animationView.visibility = View.VISIBLE
+                binding.animationView.visibility = View.VISIBLE
         })
 
         return view
@@ -65,7 +67,12 @@ class SundayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerView
         builder.setNegativeButton(getString(R.string.no)){ _, _ ->}
         builder.setTitle(getString(R.string.delete)+ " " +item.courseName + "?")
         builder.setMessage(getString(R.string.are_you_sure))
-        builder.create().show()
+        builder.create().apply {
+            setOnShowListener {
+                getButton(Dialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(context,R.color.colorAlertText))
+                getButton(Dialog.BUTTON_POSITIVE)?.setTextColor(ContextCompat.getColor(context,R.color.colorAlertText))
+            }
+        }.show()
     }
     override fun onEditItemClicked(item: Item, position: Int) {
         val intent = Intent(requireContext(), AddEventActivity::class.java)
@@ -77,7 +84,12 @@ class SundayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerView
         intent.putExtra("finishTime",item.finishTime)
         intent.putExtra("editPosition",4)
         intent.putExtra("id",id)
+        intent.putExtra("date",item.day)
         startActivity(intent)
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 

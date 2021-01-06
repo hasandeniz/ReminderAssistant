@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.alamkanak.weekview.WeekViewEvent
 import com.hasandeniz.reminderassistant.R
 import com.hasandeniz.reminderassistant.data.ItemViewModel
-import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
 import kotlin.collections.ArrayList
@@ -23,6 +22,7 @@ open class TableActivity : BaseActivity() {
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         weekView.typeface = ResourcesCompat.getFont(this, R.font.lato)
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
     }

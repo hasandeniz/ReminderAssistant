@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Hatırlatıcı</string>
     <string name="calendar">Takvim</string>
-    <string name="night_mode">Koyu Mod</string>
+    <string name="night_mode">Tema Seç</string>
     <string name="notification">Bildirim</string>
     <string name="add_event">Ekle</string>
     <string name="_12_00">12:00</string>
@@ -14,8 +14,8 @@
     <string name="delete">Sil</string>
     <string name="edit">Düzenle</string>
     <string name="time_button_default_text">00:00</string>
-    <string name="finish_time">Bitiş Saati</string>
-    <string name="start_time">Başlangıç Saati</string>
+    <string name="finish_time">Bitiş Saati:</string>
+    <string name="start_time">Başlangıç Saati:</string>
     <string name="class_name">Sınıf Adı</string>
     <string name="course_name">Ders Adı</string>
     <string name="enter_the_course_name">Ders adını giriniz…</string>
@@ -52,5 +52,6 @@
     <string name="madeBy">Hasan Deniz ve Ali Türk tarafından yapılmıştır</string>
     <string name="references">Referanslar:</string>
     <string name="contact">Bizimle İletişime Geçin: hasandeniz394@gmail.com</string>
+    <string name="delete_button">Silme Butonu</string>
 
 </resources>

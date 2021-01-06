@@ -1,7 +1,6 @@
 package com.hasandeniz.reminderassistant
 
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -10,7 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
-import android.text.Html
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -21,10 +19,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.data.ItemViewModel
 import com.hasandeniz.reminderassistant.data.MyPreferences
+import com.hasandeniz.reminderassistant.databinding.ActivityMainBinding
 import com.hasandeniz.reminderassistant.fragments.*
 import com.hasandeniz.reminderassistant.notify.AlarmReceiver
 import com.hasandeniz.reminderassistant.table.WholeViewSnappingActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.*
 
@@ -33,12 +31,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: FragmentAdapter
     @InternalCoroutinesApi
     private lateinit var mItemViewModel: ItemViewModel
-
-    @SuppressLint("BatteryLife")
+    private lateinit var binding: ActivityMainBinding
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
         val pIntent = Intent()
         val packageName: String = this.packageName
         val pm:PowerManager = this.getSystemService(Context.POWER_SERVICE) as PowerManager
@@ -57,10 +57,10 @@ class MainActivity : AppCompatActivity() {
 
 
         if(globalPosition != null){
-            val tab = tabs.getTabAt(globalPosition!!.toInt())
+            val tab = binding.tabs.getTabAt(globalPosition!!.toInt())
             tab!!.select()
         }else{
-            val tab = tabs.getTabAt(checkDay())
+            val tab = binding.tabs.getTabAt(checkDay())
             tab!!.select()
         }
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
                 chooseThemeDialog()
             }
             R.id.actionAddEvent -> {
-                val position: Int = tabs.selectedTabPosition
+                val position: Int = binding.tabs.selectedTabPosition
                 val intent = Intent(this, AddEventActivity::class.java)
                 intent.putExtra("tabPosition", position)
                 startActivity(intent)
@@ -214,8 +214,8 @@ class MainActivity : AppCompatActivity() {
         adapter.addFragment(FridayFragment(), getString(R.string.friday))
         adapter.addFragment(SaturdayFragment(), getString(R.string.saturday))
         adapter.addFragment(SundayFragment(), getString(R.string.sunday))
-        viewPager.adapter = adapter
-        tabs.setupWithViewPager(viewPager)
+        binding.viewPager.adapter = adapter
+        binding.tabs.setupWithViewPager(binding.viewPager)
     }
 
 }

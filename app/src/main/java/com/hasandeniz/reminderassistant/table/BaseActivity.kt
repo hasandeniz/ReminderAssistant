@@ -9,23 +9,27 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alamkanak.weekview.*
 import com.alamkanak.weekview.WeekView.*
-import kotlinx.android.synthetic.main.activity_base.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import com.hasandeniz.reminderassistant.R
+import com.hasandeniz.reminderassistant.databinding.ActivityBaseBinding
 
 abstract class BaseActivity : AppCompatActivity(), EventClickListener, MonthLoader.MonthChangeListener {
+    private lateinit var binding: ActivityBaseBinding
     private var mWeekViewType = TYPE_THREE_DAY_VIEW
     private lateinit var shortDateFormat: DateFormat
     private lateinit var timeFormat: DateFormat
-
+    lateinit var weekView: WeekView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         shortDateFormat = WeekViewUtil.getWeekdayWithNumericDayAndMonthFormat(this, true)
         timeFormat = android.text.format.DateFormat.getTimeFormat(this) ?: SimpleDateFormat("HH:mm", Locale.getDefault())
-        setContentView(R.layout.activity_base)
+        binding = ActivityBaseBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
+        weekView = binding.weekView
         weekView.eventClickListener = this
         weekView.monthChangeListener = this
 
@@ -39,8 +43,7 @@ abstract class BaseActivity : AppCompatActivity(), EventClickListener, MonthLoad
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        when (id) {
+        when (item.itemId) {
             R.id.action_today -> {
                 weekView.goToToday()
                 return true
@@ -75,6 +78,7 @@ abstract class BaseActivity : AppCompatActivity(), EventClickListener, MonthLoad
 
         when (dayViewType) {
             TYPE_DAY_VIEW -> {
+
                 mWeekViewType = TYPE_DAY_VIEW
                 weekView.numberOfVisibleDays = 1
 
@@ -83,6 +87,7 @@ abstract class BaseActivity : AppCompatActivity(), EventClickListener, MonthLoad
                 weekView.eventTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12f, resources.displayMetrics)
             }
             TYPE_THREE_DAY_VIEW -> {
+
                 mWeekViewType = TYPE_THREE_DAY_VIEW
                 weekView.numberOfVisibleDays = 3
 
@@ -91,6 +96,7 @@ abstract class BaseActivity : AppCompatActivity(), EventClickListener, MonthLoad
                 weekView.eventTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12f, resources.displayMetrics)
             }
             TYPE_WEEK_VIEW -> {
+
                 mWeekViewType = TYPE_WEEK_VIEW
                 weekView.numberOfVisibleDays = 7
 

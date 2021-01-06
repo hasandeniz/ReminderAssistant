@@ -2,40 +2,47 @@ package com.hasandeniz.reminderassistant.fragments
 
 import android.app.AlarmManager
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.PendingIntent
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hasandeniz.reminderassistant.*
 import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
+import com.hasandeniz.reminderassistant.databinding.FragmentFridayBinding
 import com.hasandeniz.reminderassistant.notify.AlarmReceiver
-import kotlinx.android.synthetic.main.fragment_friday.*
-import kotlinx.android.synthetic.main.fragment_friday.view.*
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlin.collections.ArrayList
 
 
-class FridayFragment : Fragment(), RecyclerViewAdapter.OnItemClickListener, RecyclerViewAdapter.ItemListener {
+class FridayFragment : Fragment(), RecyclerViewAdapter.OnItemClickListener, RecyclerViewAdapter.DeleteItemListener {
     @InternalCoroutinesApi
     private lateinit var mItemViewModel: ItemViewModel
+    private var _binding: FragmentFridayBinding? = null
+    private val binding get() = _binding!!
     @InternalCoroutinesApi
     override fun onCreateView(
-
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_friday, container, false)
+    ): View {
+        _binding = FragmentFridayBinding.inflate(inflater, container, false)
+        val view = binding.root
+
         val adapter = RecyclerViewAdapter()
-        val recyclerView = view.recyclerViewFriday
+        val recyclerView = binding.recyclerViewFriday
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter.setListener(this)
@@ -44,16 +51,15 @@ class FridayFragment : Fragment(), RecyclerViewAdapter.OnItemClickListener, Recy
         mItemViewModel.readFridayData.observe(viewLifecycleOwner, { item ->
             adapter.setData(item as ArrayList<Item>)
             if(item.isNotEmpty()){
-                animationView.visibility = View.INVISIBLE
+                binding.animationView.visibility = View.INVISIBLE
             }else
-                animationView.visibility = View.VISIBLE
+                binding.animationView.visibility = View.VISIBLE
 
 
         })
 
         return view
     }
-
     @InternalCoroutinesApi
     override fun onItemClicked(item: Item, position: Int) {
         val builder = AlertDialog.Builder(requireContext())
@@ -65,12 +71,19 @@ class FridayFragment : Fragment(), RecyclerViewAdapter.OnItemClickListener, Recy
             mItemViewModel.deleteItem(item)
             alarmManager.cancel(pendingIntent)
         }
+
         builder.setNegativeButton(getString(R.string.no)){ _, _ ->}
         builder.setTitle(getString(R.string.delete)+ " " +item.courseName + "?")
         builder.setMessage(getString(R.string.are_you_sure))
-        builder.create().show()
-    }
+        builder.create().apply {
+            setOnShowListener {
+                getButton(Dialog.BUTTON_NEGATIVE)?.setTextColor(ContextCompat.getColor(context,R.color.colorAlertText))
+                getButton(Dialog.BUTTON_POSITIVE)?.setTextColor(ContextCompat.getColor(context,R.color.colorAlertText))
+            }
+        }.show()
 
+
+    }
     override fun onEditItemClicked(item: Item, position: Int) {
         val intent = Intent(requireContext(), AddEventActivity::class.java)
         val id = item.id
@@ -81,8 +94,12 @@ class FridayFragment : Fragment(), RecyclerViewAdapter.OnItemClickListener, Recy
         intent.putExtra("finishTime",item.finishTime)
         intent.putExtra("editPosition",4)
         intent.putExtra("id",id)
+        intent.putExtra("date",item.day)
         startActivity(intent)
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

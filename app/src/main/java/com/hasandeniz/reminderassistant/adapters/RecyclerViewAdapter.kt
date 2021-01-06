@@ -15,7 +15,7 @@ import java.util.*
 
 class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>() {
     private var itemList: MutableList<Item> = Collections.emptyList()
-    private lateinit var listener: ItemListener
+    private lateinit var listenerDelete: DeleteItemListener
     private lateinit var editListener: OnItemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -29,11 +29,11 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolde
         holder.textView2.text = currentItem.className
         holder.imageText1.text = currentItem.startTime
         holder.imageText2.text = currentItem.finishTime
-        holder.imageButton.setOnClickListener { view ->
-            listener.onItemClicked(currentItem, position)
+        holder.imageButton.setOnClickListener {
+            listenerDelete.onItemClicked(currentItem, position)
             notifyDataSetChanged()
         }
-        holder.itemView.setOnClickListener { view ->
+        holder.itemView.setOnClickListener {
             editListener.onEditItemClicked(currentItem, position)
             notifyDataSetChanged()
         }
@@ -60,11 +60,11 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolde
         notifyDataSetChanged()
     }
     //for delete button
-    interface ItemListener {
+    interface DeleteItemListener {
         fun onItemClicked(item: Item, position: Int)
     }
-    fun setListener(listener: ItemListener) {
-        this.listener = listener
+    fun setListener(listenerDelete: DeleteItemListener) {
+        this.listenerDelete = listenerDelete
     }
     //for item itself
     interface OnItemClickListener{
