@@ -29,14 +29,14 @@ class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolde
         holder.textView2.text = currentItem.className
         holder.imageText1.text = currentItem.startTime
         holder.imageText2.text = currentItem.finishTime
-        holder.imageButton.setOnClickListener(View.OnClickListener { view ->
+        holder.imageButton.setOnClickListener { view ->
             listener.onItemClicked(currentItem, position)
             notifyDataSetChanged()
-        })
-        holder.itemView.setOnClickListener(View.OnClickListener { view ->
+        }
+        holder.itemView.setOnClickListener { view ->
             editListener.onEditItemClicked(currentItem, position)
             notifyDataSetChanged()
-        })
+        }
 
 
     }

@@ -3,8 +3,6 @@ package com.hasandeniz.reminderassistant.notify
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.hasandeniz.reminderassistant.notify.NotificationUtils
-import io.karn.notify.Notify
 
 class AlarmReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
@@ -12,6 +10,5 @@ class AlarmReceiver: BroadcastReceiver() {
         val notification = notificationUtils.getNotificationBuilder().build()
         notificationUtils.getManager().notify(150, notification)
     }
-
 
 }

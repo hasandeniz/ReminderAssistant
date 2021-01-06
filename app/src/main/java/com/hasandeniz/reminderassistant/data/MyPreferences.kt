@@ -10,10 +10,3 @@ class MyPreferences(context: Context?) {
         set(value) = preferences.edit().putInt("a", value).apply()
 
 }
-
-class MyCounterPreferences(context: Context?){
-    private val myPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-    var globalCounter = myPreferences.getInt("counter",0)
-        set(value) = myPreferences.edit().putInt("counter",value).apply()
-
-}

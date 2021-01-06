@@ -18,7 +18,6 @@ import com.hasandeniz.reminderassistant.*
 import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
-import com.hasandeniz.reminderassistant.data.MyCounterPreferences
 import com.hasandeniz.reminderassistant.notify.AlarmReceiver
 import kotlinx.android.synthetic.main.fragment_friday.*
 import kotlinx.android.synthetic.main.fragment_monday.view.*
@@ -43,7 +42,7 @@ class MondayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerView
         adapter.setListener(this)
         adapter.setEditItemClickListener(this)
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
-        mItemViewModel.readMondayData.observe(viewLifecycleOwner, Observer { item ->
+        mItemViewModel.readMondayData.observe(viewLifecycleOwner, { item ->
             adapter.setData(item as ArrayList<Item>)
             if(item.isNotEmpty())
                 animationView.visibility = View.INVISIBLE
@@ -61,15 +60,13 @@ class MondayFragment : Fragment(),RecyclerViewAdapter.ItemListener, RecyclerView
         val alarmIntent = Intent(requireContext(), AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(requireContext(), item.id , alarmIntent, 0)
 
-        builder.setPositiveButton("Yes"){ _, _ ->
+        builder.setPositiveButton(getString(R.string.yes)){ _, _ ->
             mItemViewModel.deleteItem(item)
-            MyCounterPreferences(requireContext()).globalCounter++
             alarmManager.cancel(pendingIntent)
-            Toast.makeText(requireContext(), "Successfully removed",Toast.LENGTH_SHORT).show()
         }
-        builder.setNegativeButton("No"){ _, _ ->}
-        builder.setTitle("Delete ${item.courseName}?")
-        builder.setMessage("Are you sure want to delete ${item.courseName}?")
+        builder.setNegativeButton(getString(R.string.no)){ _, _ ->}
+        builder.setTitle(getString(R.string.delete)+ " " +item.courseName + "?")
+        builder.setMessage(getString(R.string.are_you_sure))
         builder.create().show()
     }
     override fun onEditItemClicked(item: Item, position: Int) {

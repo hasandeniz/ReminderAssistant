@@ -39,7 +39,14 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="thursday">Thursday</string>
-
+    <string name="notificationTitle">Hurry!</string>
+    <string name="notificationText">Course is about to start</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="are_you_sure">Are you sure want to delete?</string>
+    <string name="warning">Warning!</string>
+    <string name="must_be_filled">All areas must be filled!</string>
+    <string name="ok">OK</string>
 
 
 </resources>

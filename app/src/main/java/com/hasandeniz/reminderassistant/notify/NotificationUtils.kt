@@ -48,8 +48,8 @@ class  NotificationUtils(base: Context) : ContextWrapper(base) {
         }
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
         return NotificationCompat.Builder(applicationContext, MYCHANNEL_ID)
-            .setContentTitle("Wake to fuck up samurai!")
-            .setContentText("You have a course to burn!")
+            .setContentTitle(getString(R.string.notificationTitle))
+            .setContentText(getString(R.string.notificationText))
             .setSmallIcon(R.drawable.ic_app_icon)
             .setColor(Color.YELLOW)
             .setContentIntent(pendingIntent)
