@@ -1,6 +1,7 @@
 package com.hasandeniz.reminderassistant
 
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -15,6 +16,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.data.ItemViewModel
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     @InternalCoroutinesApi
     private lateinit var mItemViewModel: ItemViewModel
 
+    @SuppressLint("BatteryLife")
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +51,8 @@ class MainActivity : AppCompatActivity() {
 
         checkTheme()
         val actionBar = supportActionBar
-        actionBar!!.title = (Html.fromHtml(
-            "<font color=\"@color/customAppNameColor\">" + getString(
-                R.string.app_name
-            ) + "</font>"
-        ))
-
+        val html = "<font color=\"@color/customAppNameColor\">" + getString(R.string.app_name) + "</font>"
+        actionBar!!.title = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
         createFragments()
 
 
