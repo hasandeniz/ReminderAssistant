@@ -37,8 +37,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val pIntent = Intent()
-
-
         val packageName: String = this.packageName
         val pm:PowerManager = this.getSystemService(Context.POWER_SERVICE) as PowerManager
         if (!pm.isIgnoringBatteryOptimizations(packageName)) {
@@ -108,6 +106,10 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.actionAbout -> {
+                val intent = Intent(this, AboutActivity::class.java)
+                startActivity(intent)
+            }
             R.id.actionTable -> {
                 val intent = Intent(this, WholeViewSnappingActivity::class.java)
                 startActivity(intent)

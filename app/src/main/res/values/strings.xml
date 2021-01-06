@@ -47,6 +47,9 @@
     <string name="warning">Warning!</string>
     <string name="must_be_filled">All areas must be filled!</string>
     <string name="ok">OK</string>
-
-
+    <string name="about">About</string>
+    <string name="animationRef" translatable="false"><a href="https://lottiefiles.com/781-no-notifications">Animation by Bryan Trang on LottieFiles</a></string>
+    <string name="madeBy">Made by Hasan Deniz and Ali Türk</string>
+    <string name="references">References:</string>
+    <string name="contact">Contact Us: hasandeniz394@gmail.com </string>
 </resources>
