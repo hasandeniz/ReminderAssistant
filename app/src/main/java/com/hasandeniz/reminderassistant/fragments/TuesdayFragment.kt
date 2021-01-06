@@ -82,7 +82,7 @@ class TuesdayFragment : Fragment(),RecyclerViewAdapter.DeleteItemListener, Recyc
         intent.putExtra("className",item.className)
         intent.putExtra("startTime",item.startTime)
         intent.putExtra("finishTime",item.finishTime)
-        intent.putExtra("editPosition",4)
+        intent.putExtra("editPosition",1)
         intent.putExtra("id",id)
         intent.putExtra("date",item.day)
         startActivity(intent)

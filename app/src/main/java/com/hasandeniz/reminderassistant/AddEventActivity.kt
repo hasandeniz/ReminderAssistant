@@ -112,24 +112,31 @@ class AddEventActivity : AppCompatActivity() {
             if (intent.getIntExtra("editPosition",-1) != -1){
                 when (intent.getIntExtra("editPosition",-1)) {
                     0 -> {
+                        date = "Monday"
                         globalPosition = 0.toString()
                     }
                     1 -> {
+                        date = "Tuesday"
                         globalPosition = 1.toString()
                     }
                     2 -> {
+                        date = "Wednesday"
                         globalPosition = 2.toString()
                     }
                     3 -> {
+                        date = "Thursday"
                         globalPosition = 3.toString()
                     }
                     4 -> {
+                        date = "Friday"
                         globalPosition = 4.toString()
                     }
                     5 -> {
+                        date = "Saturday"
                         globalPosition = 5.toString()
                     }
                     6 -> {
+                        date = "Sunday"
                         globalPosition = 6.toString()
                     }
                 }
@@ -183,7 +190,9 @@ class AddEventActivity : AppCompatActivity() {
         val finishTime = finishTime
         val id = intent.getIntExtra("id",-1)
         val date = intent.getStringExtra("date")
-        val newItem = Item(id,courseName,className,startTime,finishTime,date!!)
+
+        val newItem = Item(id,courseName,className,startTime,finishTime, date!!)
+
         mItemViewModel.updateItem(newItem)
 
     }
