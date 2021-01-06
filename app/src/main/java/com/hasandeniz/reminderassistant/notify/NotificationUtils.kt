@@ -18,8 +18,8 @@ import com.hasandeniz.reminderassistant.R
 
 class  NotificationUtils(base: Context) : ContextWrapper(base) {
 
-    private val MYCHANNEL_ID = "App Alert Notification ID"
-    private val MYCHANNEL_NAME = "App Alert Notification"
+    private val myChannelId = "Reminder Id"
+    private val myChannelName = "Reminder Alert Notification"
 
     private var manager: NotificationManager? = null
 
@@ -31,7 +31,7 @@ class  NotificationUtils(base: Context) : ContextWrapper(base) {
 
     @TargetApi(Build.VERSION_CODES.O)
     private fun createChannels() {
-        val channel = NotificationChannel(MYCHANNEL_ID, MYCHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
+        val channel = NotificationChannel(myChannelId, myChannelName, NotificationManager.IMPORTANCE_HIGH)
         channel.enableVibration(true)
         channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         getManager().createNotificationChannel(channel)
@@ -47,7 +47,7 @@ class  NotificationUtils(base: Context) : ContextWrapper(base) {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
-        return NotificationCompat.Builder(applicationContext, MYCHANNEL_ID)
+        return NotificationCompat.Builder(applicationContext, myChannelId)
             .setContentTitle(getString(R.string.notificationTitle))
             .setContentText(getString(R.string.notificationText))
             .setSmallIcon(R.drawable.ic_app_icon)

@@ -1,17 +1,20 @@
 package com.hasandeniz.reminderassistant
 
-import android.net.MailTo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
+import com.hasandeniz.reminderassistant.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityAboutBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_about)
+        binding = ActivityAboutBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         val actionBar = supportActionBar
         val html = "<font color=\"@color/customAppNameColor\">" + getString(R.string.about) + "</font>"

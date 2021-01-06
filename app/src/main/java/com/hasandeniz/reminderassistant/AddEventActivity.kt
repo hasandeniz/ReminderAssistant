@@ -1,24 +1,16 @@
 package com.hasandeniz.reminderassistant
 
-import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.AlarmManager.INTERVAL_DAY
-import android.app.AlarmManager.RTC_WAKEUP
-import android.app.PendingIntent
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
-import kotlinx.android.synthetic.main.activity_add_event.*
+import com.hasandeniz.reminderassistant.databinding.ActivityAddEventBinding
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,6 +21,7 @@ var globalPosition:String? = null
 
 class AddEventActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAddEventBinding
     lateinit var courseName : String
     lateinit var className : String
     lateinit var startTime : String
@@ -42,17 +35,22 @@ class AddEventActivity : AppCompatActivity() {
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityAddEventBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         val actionBar = supportActionBar
         actionBar!!.hide()
-        setContentView(R.layout.activity_add_event)
+
 
         if (intent.getBooleanExtra("isEdit",false)){
-            courseNameInput.setText(intent.getStringExtra("courseName"))
-            classNameInput.setText(intent.getStringExtra("className"))
+            binding.courseNameInput.setText(intent.getStringExtra("courseName"))
+            binding.classNameInput.setText(intent.getStringExtra("className"))
             startTime = intent.getStringExtra("startTime").toString()
             finishTime = intent.getStringExtra("finishTime").toString()
-            startTimeButton.text = getString(R.string.start_time) + ": "+ startTime
-            finishTimeButton.text =  getString(R.string.finish_time) + ": " + finishTime
+            val startText = getString(R.string.start_time) + " " + startTime
+            val finishText = getString(R.string.finish_time) + " " + finishTime
+            binding.startTimeButton.text = startText
+            binding.finishTimeButton.text =  finishText
         }else{
             courseName = ""
             className = ""
@@ -67,29 +65,29 @@ class AddEventActivity : AppCompatActivity() {
 
 
     private fun check(){
-        saveButton.isEnabled = !(startTime == "" || finishTime == "")
+        binding.saveButton.isEnabled = !(startTime == "" || finishTime == "")
     }
 
-    @SuppressLint("SimpleDateFormat")
-    fun startTime(view: View){
+    fun startTime(view:View) {
         val cal = Calendar.getInstance()
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+        val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY,hour)
             cal.set(Calendar.MINUTE,minute)
-            startTime = SimpleDateFormat("HH:mm").format(cal.time).toString()
-            startTimeButton.text = getString(R.string.start_time) + ": "+ startTime
+            startTime = SimpleDateFormat("HH:mm",Locale.getDefault()).format(cal.time).toString()
+            val startText = getString(R.string.start_time) + " " + startTime
+            binding.startTimeButton.text = startText
             check()
         }
         TimePickerDialog(this,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
     }
-    @SuppressLint("SimpleDateFormat")
-    fun finishTime(view: View){
+    fun finishTime(view:View) {
         val cal = Calendar.getInstance()
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+        val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
             cal.set(Calendar.HOUR_OF_DAY,hour)
             cal.set(Calendar.MINUTE,minute)
-            finishTime = SimpleDateFormat("HH:mm").format(cal.time).toString()
-            finishTimeButton.text = getString(R.string.finish_time) + ": " + finishTime
+            finishTime = SimpleDateFormat("HH:mm",Locale.getDefault()).format(cal.time).toString()
+            val finishText = getString(R.string.finish_time) + " " +finishTime
+            binding.finishTimeButton.text = finishText
             check()
         }
         TimePickerDialog(this,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
@@ -100,15 +98,15 @@ class AddEventActivity : AppCompatActivity() {
 
 
     @InternalCoroutinesApi
-    fun saveButton(view: View){
-        courseName = courseNameInput.text.toString()
-        className = classNameInput.text.toString()
+    fun saveButton(view:View) {
+        courseName = binding.courseNameInput.text.toString()
+        className = binding.classNameInput.text.toString()
         val mainIntent = Intent(this,MainActivity::class.java)
         if (courseName == "" || className == ""){
             val builder = AlertDialog.Builder(this)
             builder.setTitle( getString(R.string.warning))
             builder.setMessage( getString(R.string.must_be_filled))
-            builder.setNeutralButton( getString(R.string.ok)){ dialogInterface: DialogInterface, i: Int -> }
+            builder.setNeutralButton( getString(R.string.ok)){ _: DialogInterface, _: Int -> }
             builder.show()
         }else{
             if (intent.getIntExtra("editPosition",-1) != -1){
@@ -116,42 +114,34 @@ class AddEventActivity : AppCompatActivity() {
                     0 -> {
                         date = "Monday"
                         globalPosition = 0.toString()
-                        updateItem(date)
                     }
                     1 -> {
                         date = "Tuesday"
                         globalPosition = 1.toString()
-                        updateItem(date)
                     }
                     2 -> {
                         date = "Wednesday"
                         globalPosition = 2.toString()
-                        updateItem(date)
                     }
                     3 -> {
                         date = "Thursday"
                         globalPosition = 3.toString()
-                        updateItem(date)
                     }
                     4 -> {
                         date = "Friday"
                         globalPosition = 4.toString()
-                        updateItem(date)
                     }
                     5 -> {
                         date = "Saturday"
                         globalPosition = 5.toString()
-                        updateItem(date)
                     }
                     6 -> {
                         date = "Sunday"
                         globalPosition = 6.toString()
-                        updateItem(date)
                     }
-
                 }
+                updateItem()
             }else{
-
                 when (intent.getIntExtra("tabPosition",-1)) {
                     0 -> {
                         date = "Monday"
@@ -188,18 +178,21 @@ class AddEventActivity : AppCompatActivity() {
             startActivity(mainIntent)
         }
     }
-    fun cancelButton(view: View) {
+    fun cancelButton(view:View) {
         finish()
     }
 
     @InternalCoroutinesApi
-    fun updateItem(date: String){
+    fun updateItem(){
         val courseName = courseName
         val className = className
         val startTime = startTime
         val finishTime = finishTime
         val id = intent.getIntExtra("id",-1)
-        val newItem = Item(id,courseName,className,startTime,finishTime,date)
+        val date = intent.getStringExtra("date")
+
+        val newItem = Item(id,courseName,className,startTime,finishTime, date!!)
+
         mItemViewModel.updateItem(newItem)
 
     }

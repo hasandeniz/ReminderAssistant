@@ -9,4 +9,5 @@
     <color name="customTimeTextColor">#000000</color>
     <color name="customAppNameColor">#2e2e2e</color>
     <color name="deleteIconColor">@color/black</color>
+    <color name="colorAlertText">#c5e1a5</color>
 </resources>
