@@ -48,5 +48,9 @@
     <string name="warning">Uyarı!</string>
     <string name="must_be_filled">Tüm alanlar dolu olmalıdır!</string>
     <string name="ok">Tamam</string>
+    <string name="about">Hakkında</string>
+    <string name="madeBy">Hasan Deniz ve Ali Türk tarafından yapılmıştır</string>
+    <string name="references">Referanslar:</string>
+    <string name="contact">Bizimle İletişime Geçin: hasandeniz394@gmail.com</string>
 
 </resources>
