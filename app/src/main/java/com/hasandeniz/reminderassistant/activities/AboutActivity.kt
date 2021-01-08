@@ -1,10 +1,11 @@
-package com.hasandeniz.reminderassistant
+package com.hasandeniz.reminderassistant.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
+import com.hasandeniz.reminderassistant.R
 import com.hasandeniz.reminderassistant.databinding.ActivityAboutBinding
 
 class AboutActivity : AppCompatActivity() {

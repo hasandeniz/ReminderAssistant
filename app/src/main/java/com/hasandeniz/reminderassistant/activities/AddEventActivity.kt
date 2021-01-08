@@ -1,4 +1,4 @@
-package com.hasandeniz.reminderassistant
+package com.hasandeniz.reminderassistant.activities
 
 import android.app.TimePickerDialog
 import android.content.DialogInterface
@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.hasandeniz.reminderassistant.R
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
 import com.hasandeniz.reminderassistant.databinding.ActivityAddEventBinding
@@ -101,7 +102,7 @@ class AddEventActivity : AppCompatActivity() {
     fun saveButton(view:View) {
         courseName = binding.courseNameInput.text.toString()
         className = binding.classNameInput.text.toString()
-        val mainIntent = Intent(this,MainActivity::class.java)
+        val mainIntent = Intent(this, MainActivity::class.java)
         if (courseName == "" || className == ""){
             val builder = AlertDialog.Builder(this)
             builder.setTitle( getString(R.string.warning))
