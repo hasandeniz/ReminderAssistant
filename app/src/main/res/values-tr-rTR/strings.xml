@@ -53,5 +53,9 @@
     <string name="references">Referanslar:</string>
     <string name="contact">Bizimle İletişime Geçin: hasandeniz394@gmail.com</string>
     <string name="delete_button">Silme Butonu</string>
-
+    <string name="showcase_add">Bu ekleme butonu\n\nDersleri buradan ekleyebilirsin! </string>
+    <string name="showcase_theme">Bu tema değiştirme butonu\n\nTemayı buradan değiştirebilirsin! </string>
+    <string name="showcase_table">Bu tablo görünüm butonu\n\nTablo görünümüne buradan geçebilirsin! </string>
+    <string name="showcase_page">Burası ana ekran\n\nGünlük derslerini buradan görebilirsin! </string>
+    <string name="got_it">Anladım</string>
 </resources>

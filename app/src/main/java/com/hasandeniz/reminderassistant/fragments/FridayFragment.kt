@@ -5,20 +5,17 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.PendingIntent
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hasandeniz.reminderassistant.*
+import com.hasandeniz.reminderassistant.activities.AddEventActivity
 import com.hasandeniz.reminderassistant.adapters.RecyclerViewAdapter
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
@@ -54,7 +51,6 @@ class FridayFragment : Fragment(), RecyclerViewAdapter.OnItemClickListener, Recy
                 binding.animationView.visibility = View.INVISIBLE
             }else
                 binding.animationView.visibility = View.VISIBLE
-
 
         })
 

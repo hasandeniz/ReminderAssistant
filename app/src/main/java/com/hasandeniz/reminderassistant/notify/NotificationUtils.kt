@@ -12,7 +12,7 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
-import com.hasandeniz.reminderassistant.MainActivity
+import com.hasandeniz.reminderassistant.activities.MainActivity
 import com.hasandeniz.reminderassistant.R
 
 
