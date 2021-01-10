@@ -1,4 +1,4 @@
 # ReminderAssistant
 Programming Languages Course Project<br />
-You can clone the project using Android Studio;<br />
+To see codes on your computer, just download it and open with Android Studio and test it<br />
 
