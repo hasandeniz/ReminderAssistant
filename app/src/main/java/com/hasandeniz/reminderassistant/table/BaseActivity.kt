@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alamkanak.weekview.*
 import com.alamkanak.weekview.WeekView.*
@@ -144,7 +143,6 @@ abstract class BaseActivity : AppCompatActivity(), EventClickListener, MonthLoad
     }
 
     override fun onEventClick(event: WeekViewEvent, eventRect: RectF) {
-        Toast.makeText(this, "Clicked " + event.name, Toast.LENGTH_SHORT).show()
     }
 
 
