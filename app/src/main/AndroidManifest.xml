@@ -3,7 +3,7 @@
     package="com.hasandeniz.reminderassistant">
 
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-
+    <uses-permission android:name= "android.permission.INTERNET"/>
     <application
         android:fullBackupContent="true"
         android:allowBackup="true"
@@ -12,11 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ReminderAssistant">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3409964174267492~6721656563"/>
         <activity android:name=".activities.AboutActivity" />
         <activity android:name=".table.WholeViewSnappingActivity" />
         <activity android:name=".table.BaseActivity" />
         <activity android:name=".table.TableActivity" />
-        <activity android:name=".activities.AddEventActivity" />
+        <activity android:name=".activities.AddEventActivity"
+            android:hardwareAccelerated="true"/>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,6 +33,7 @@
             android:name=".notify.AlarmReceiver"
             android:enabled="true"
             android:exported="false" />
+
     </application>
 
 </manifest>

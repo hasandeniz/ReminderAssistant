@@ -1,17 +1,18 @@
 package com.hasandeniz.reminderassistant.activities
 
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,6 +21,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.hasandeniz.reminderassistant.R
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.data.ItemViewModel
@@ -30,17 +35,16 @@ import com.hasandeniz.reminderassistant.notify.AlarmReceiver
 import com.hasandeniz.reminderassistant.table.WholeViewSnappingActivity
 import kotlinx.coroutines.InternalCoroutinesApi
 import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence
-import uk.co.deanwild.materialshowcaseview.MaterialShowcaseView
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig
 import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: FragmentAdapter
     @InternalCoroutinesApi
     private lateinit var mItemViewModel: ItemViewModel
     private lateinit var binding: ActivityMainBinding
-
+    private var mInterstitialAd: InterstitialAd? = null
+    private final var TAG = "MainActivity"
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         //change action bar title and its color
         setActionBar()
-        //creates fragments for tablayout
+        //creates fragments for tabLayout
         createFragments()
         //selects current tab according to data
         selectTab()
@@ -60,10 +64,27 @@ class MainActivity : AppCompatActivity() {
 
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         setAlarms(mItemViewModel)
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(this,"ca-app-pub-3409964174267492/7001584513",adRequest,object : InterstitialAdLoadCallback(){
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d(TAG, adError.message)
+                mInterstitialAd = null
+            }
 
-
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.d(TAG, "Ad was loaded.")
+                mInterstitialAd = interstitialAd
+            }
+        })
+        //mInterstitialAd = InterstitialAd(this)
+       // mInterstitialAd.adUnitId = "ca-app-pub-3409964174267492/7001584513"
+        //mInterstitialAd.loadAd(AdRequest.Builder().build())
     }
 
+    override fun onBackPressed() {
+        finishAffinity()
+    }
+    @SuppressLint("BatteryLife")
     private fun askPermission(){
         val pIntent = Intent()
         val packageName: String = this.packageName
@@ -88,6 +109,7 @@ class MainActivity : AppCompatActivity() {
             tab!!.select()
         }
     }
+
     @InternalCoroutinesApi
     private fun setAlarms(mItemViewModel: ItemViewModel){
         mItemViewModel.readAllData.observe(this, { item ->
@@ -112,6 +134,7 @@ class MainActivity : AppCompatActivity() {
         })
 
     }
+
     private fun startAlarm(calendar: Calendar, id: Int) {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(applicationContext, AlarmReceiver::class.java)
@@ -119,21 +142,14 @@ class MainActivity : AppCompatActivity() {
         if(calendar.before(Calendar.getInstance())){
             calendar.add(Calendar.DATE, 7)
         }
-        alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                pendingIntent
-        )
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,calendar.timeInMillis,pendingIntent)
     }
-    private fun Int.toDp():Int = (this / Resources.getSystem().displayMetrics.density).toInt()
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         Handler(Looper.getMainLooper()).post {
-            val view: View = findViewById<View>(R.id.actionAddEvent) as View
-            val view1: View = findViewById<View>(R.id.actionNightMode) as View
-            val view2: View = findViewById<View>(R.id.actionTable) as View
-            val view3: View = findViewById<View>(R.id.viewPager) as View
-            val text = HtmlCompat.fromHtml(resources.getString(R.string.got_it),HtmlCompat.FROM_HTML_MODE_LEGACY)
+            val view: View = findViewById(R.id.actionAddEvent)
+            val view1: View = findViewById(R.id.actionNightMode)
+            val view2: View = findViewById(R.id.actionTable)
             val config = ShowcaseConfig()
             config.delay = 250
             val sequence = MaterialShowcaseSequence(this, 1.toString())
@@ -144,14 +160,6 @@ class MainActivity : AppCompatActivity() {
                     getString(R.string.showcase_theme), getString(R.string.got_it))
             sequence.addSequenceItem(view2,
                     getString(R.string.showcase_table), getString(R.string.got_it))
-            sequence.addSequenceItem(
-                    MaterialShowcaseView.Builder(this)
-                            .setTarget(view3)
-                            .setDismissText(text)
-                            .setContentText(getString(R.string.showcase_page))
-                            .setShapePadding((-700).toDp())
-                            .build()
-            )
             sequence.start()
         }
 
@@ -164,8 +172,19 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.actionTable -> {
+                //my interstitial id
+                //ca-app-pub-3409964174267492/7001584513
+
+                //test interstitial id
+                //ca-app-pub-3940256099942544/1033173712
                 val intent = Intent(this, WholeViewSnappingActivity::class.java)
                 startActivity(intent)
+                if (mInterstitialAd != null) {
+                    mInterstitialAd?.show(this)
+                } else {
+                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                }
+
             }
             R.id.actionNightMode -> {
                 chooseThemeDialog()

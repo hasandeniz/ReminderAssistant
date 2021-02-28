@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.alamkanak.weekview.*
 import com.alamkanak.weekview.WeekView.*
@@ -128,7 +127,7 @@ abstract class BaseActivity : AppCompatActivity(), EventClickListener, MonthLoad
         }
     }
 
-    protected fun getEventTitle(startCal: Calendar, endCal: Calendar? = null, allDay: Boolean = false): String {
+    /*protected fun getEventTitle(startCal: Calendar, endCal: Calendar? = null, allDay: Boolean = false): String {
         val startDate = startCal.time
         val endDate = endCal?.time
         return when {
@@ -141,10 +140,22 @@ abstract class BaseActivity : AppCompatActivity(), EventClickListener, MonthLoad
             WeekViewUtil.isSameDay(startCal, endCal) -> "${shortDateFormat.format(startDate)} ${timeFormat.format(startDate)}..${timeFormat.format(endDate)}"
             else -> "${shortDateFormat.format(startDate)} ${timeFormat.format(startDate)}..${shortDateFormat.format(endDate)} ${timeFormat.format(endDate)}"
         }
+    }*/
+    protected fun getEventTitle(startCal: Calendar, endCal: Calendar, allDay: Boolean = false): String {
+        val startDate = startCal.time
+        val endDate = endCal.time
+        return when {
+            allDay -> {
+                if (WeekViewUtil.isSameDay(startCal, endCal))
+                    shortDateFormat.format(startDate)
+                else "${shortDateFormat.format(startDate)}..${shortDateFormat.format(endDate)}"
+            }
+            WeekViewUtil.isSameDay(startCal, endCal) -> "${shortDateFormat.format(startDate)} ${timeFormat.format(startDate)}..${timeFormat.format(endDate)}"
+            else -> "${shortDateFormat.format(startDate)} ${timeFormat.format(startDate)}..${shortDateFormat.format(endDate)} ${timeFormat.format(endDate)}"
+        }
     }
 
     override fun onEventClick(event: WeekViewEvent, eventRect: RectF) {
-        Toast.makeText(this, "Clicked " + event.name, Toast.LENGTH_SHORT).show()
     }
 
 

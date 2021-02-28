@@ -1,13 +1,19 @@
 package com.hasandeniz.reminderassistant.activities
 
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.ads.nativetemplates.TemplateView
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.hasandeniz.reminderassistant.R
 import com.hasandeniz.reminderassistant.data.Item
 import com.hasandeniz.reminderassistant.data.ItemViewModel
@@ -32,7 +38,6 @@ class AddEventActivity : AppCompatActivity() {
     private lateinit var mItemViewModel: ItemViewModel
     private lateinit var  item: Item
 
-
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +47,24 @@ class AddEventActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.hide()
 
+        MobileAds.initialize(this) {}
 
-        if (intent.getBooleanExtra("isEdit",false)){
+        val adLoader = AdLoader.Builder(this, "ca-app-pub-3409964174267492/1675561055")
+            .forUnifiedNativeAd { unifiedNativeAd ->
+                val template = findViewById<TemplateView>(R.id.nativeTemplateView)
+                template.setNativeAd(unifiedNativeAd)
+            }
+            .build()
+        adLoader.loadAd(AdRequest.Builder().build())
+
+        //my app id
+        //ca-app-pub-3409964174267492~6721656563
+
+        //my native ad id
+        //ca-app-pub-3409964174267492/1675561055
+
+
+        if (intent.getBooleanExtra("isEdit", false)){
             binding.courseNameInput.setText(intent.getStringExtra("courseName"))
             binding.classNameInput.setText(intent.getStringExtra("className"))
             startTime = intent.getStringExtra("startTime").toString()
@@ -69,29 +90,41 @@ class AddEventActivity : AppCompatActivity() {
         binding.saveButton.isEnabled = !(startTime == "" || finishTime == "")
     }
 
-    fun startTime(view:View) {
+    fun startTime(view: View) {
         val cal = Calendar.getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-            cal.set(Calendar.HOUR_OF_DAY,hour)
-            cal.set(Calendar.MINUTE,minute)
-            startTime = SimpleDateFormat("HH:mm",Locale.getDefault()).format(cal.time).toString()
+            cal.set(Calendar.HOUR_OF_DAY, hour)
+            cal.set(Calendar.MINUTE, minute)
+            startTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time).toString()
             val startText = getString(R.string.start_time) + " " + startTime
             binding.startTimeButton.text = startText
             check()
         }
-        TimePickerDialog(this,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
+        TimePickerDialog(
+            this,
+            timeSetListener,
+            cal.get(Calendar.HOUR_OF_DAY),
+            cal.get(Calendar.MINUTE),
+            true
+        ).show()
     }
-    fun finishTime(view:View) {
+    fun finishTime(view: View) {
         val cal = Calendar.getInstance()
         val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-            cal.set(Calendar.HOUR_OF_DAY,hour)
-            cal.set(Calendar.MINUTE,minute)
-            finishTime = SimpleDateFormat("HH:mm",Locale.getDefault()).format(cal.time).toString()
+            cal.set(Calendar.HOUR_OF_DAY, hour)
+            cal.set(Calendar.MINUTE, minute)
+            finishTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time).toString()
             val finishText = getString(R.string.finish_time) + " " +finishTime
             binding.finishTimeButton.text = finishText
             check()
         }
-        TimePickerDialog(this,timeSetListener,cal.get(Calendar.HOUR_OF_DAY),cal.get(Calendar.MINUTE),true).show()
+        TimePickerDialog(
+            this,
+            timeSetListener,
+            cal.get(Calendar.HOUR_OF_DAY),
+            cal.get(Calendar.MINUTE),
+            true
+        ).show()
 
     }
 
@@ -99,19 +132,23 @@ class AddEventActivity : AppCompatActivity() {
 
 
     @InternalCoroutinesApi
-    fun saveButton(view:View) {
+    fun saveButton(view: View) {
         courseName = binding.courseNameInput.text.toString()
         className = binding.classNameInput.text.toString()
         val mainIntent = Intent(this, MainActivity::class.java)
         if (courseName == "" || className == ""){
             val builder = AlertDialog.Builder(this)
-            builder.setTitle( getString(R.string.warning))
-            builder.setMessage( getString(R.string.must_be_filled))
-            builder.setNeutralButton( getString(R.string.ok)){ _: DialogInterface, _: Int -> }
-            builder.show()
+            builder.setTitle(getString(R.string.warning))
+            builder.setMessage(getString(R.string.must_be_filled))
+            builder.setNeutralButton(getString(R.string.ok)){ _: DialogInterface, _: Int -> }
+            builder.create().apply {
+                setOnShowListener {
+                    getButton(Dialog.BUTTON_NEUTRAL)?.setTextColor(ContextCompat.getColor(context,R.color.colorAlertText))
+                }
+            }.show()
         }else{
-            if (intent.getIntExtra("editPosition",-1) != -1){
-                when (intent.getIntExtra("editPosition",-1)) {
+            if (intent.getIntExtra("editPosition", -1) != -1){
+                when (intent.getIntExtra("editPosition", -1)) {
                     0 -> {
                         date = "Monday"
                         globalPosition = 0.toString()
@@ -143,7 +180,7 @@ class AddEventActivity : AppCompatActivity() {
                 }
                 updateItem()
             }else{
-                when (intent.getIntExtra("tabPosition",-1)) {
+                when (intent.getIntExtra("tabPosition", -1)) {
                     0 -> {
                         date = "Monday"
                         globalPosition = 0.toString()
@@ -173,13 +210,13 @@ class AddEventActivity : AppCompatActivity() {
                         globalPosition = 6.toString()
                     }
                 }
-                item = Item(0,courseName,className,startTime,finishTime,date)
+                item = Item(0, courseName, className, startTime, finishTime, date)
                 mItemViewModel.addItem(item)
             }
             startActivity(mainIntent)
         }
     }
-    fun cancelButton(view:View) {
+    fun cancelButton(view: View) {
         finish()
     }
 
@@ -189,10 +226,10 @@ class AddEventActivity : AppCompatActivity() {
         val className = className
         val startTime = startTime
         val finishTime = finishTime
-        val id = intent.getIntExtra("id",-1)
+        val id = intent.getIntExtra("id", -1)
         val date = intent.getStringExtra("date")
 
-        val newItem = Item(id,courseName,className,startTime,finishTime, date!!)
+        val newItem = Item(id, courseName, className, startTime, finishTime, date!!)
 
         mItemViewModel.updateItem(newItem)
 

@@ -13,7 +13,7 @@ import kotlin.collections.ArrayList
 
 
 open class TableActivity : BaseActivity() {
-    var uniqueId: Long = 0
+    private var uniqueId: Long = 0
     @InternalCoroutinesApi
     private lateinit var mItemViewModel: ItemViewModel
     private fun getUniqueId(): String = uniqueId++.toString()
@@ -30,7 +30,7 @@ open class TableActivity : BaseActivity() {
     @InternalCoroutinesApi
     override fun onMonthChange(newYear: Int, newMonth: Int): MutableList<out WeekViewEvent>? {
         val events = ArrayList<WeekViewEvent>()
-        val repeatevents: ArrayList<WeekViewEvent> = ArrayList()
+        val repeatEvents: ArrayList<WeekViewEvent> = ArrayList()
 
         mItemViewModel.readAllData.observe(this, { item ->
             if (item.isNotEmpty()) {
@@ -50,15 +50,15 @@ open class TableActivity : BaseActivity() {
                         startTime.set(Calendar.MINUTE, minute)
                         startTime.add(Calendar.DATE, i)
                         startTime.add(Calendar.SECOND,1)
-                        val finishTime = startTime.clone() as Calendar
 
+                        val finishTime = startTime.clone() as Calendar
                         finishTime.set(Calendar.HOUR_OF_DAY, hour1)
                         finishTime.set(Calendar.MINUTE, minute1)
 
-                        val rnds = (1..5).random()
+                        val myRandom = (1..5).random()
 
                         val event = WeekViewEvent(getUniqueId(), getEventTitle(startTime, finishTime), startTime, finishTime)
-                        when (rnds) {
+                        when (myRandom) {
                             1 -> {
                                 event.color = ResourcesCompat.getColor(resources,
                                     R.color.event_color_01, null)
@@ -76,7 +76,7 @@ open class TableActivity : BaseActivity() {
                         }
 
                         event.name = data.courseName
-                        repeatevents.add(event)
+                        repeatEvents.add(event)
                         weekView.notifyDataSetChanged()
 
                     }
@@ -85,7 +85,7 @@ open class TableActivity : BaseActivity() {
                 }
             }
         })
-        for (event in repeatevents) {
+        for (event in repeatEvents) {
             if (event.startTime.get(Calendar.MONTH)== newMonth-1 && event.startTime[Calendar.YEAR] == newYear) {
                 events.add(event)
 
