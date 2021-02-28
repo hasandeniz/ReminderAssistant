@@ -12,6 +12,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.PowerManager
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -21,7 +22,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.hasandeniz.reminderassistant.R
 import com.hasandeniz.reminderassistant.adapters.FragmentAdapter
 import com.hasandeniz.reminderassistant.data.ItemViewModel
@@ -35,13 +38,13 @@ import uk.co.deanwild.materialshowcaseview.MaterialShowcaseSequence
 import uk.co.deanwild.materialshowcaseview.ShowcaseConfig
 import java.util.*
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: FragmentAdapter
     @InternalCoroutinesApi
     private lateinit var mItemViewModel: ItemViewModel
     private lateinit var binding: ActivityMainBinding
-    private lateinit var mInterstitialAd: InterstitialAd
+    private var mInterstitialAd: InterstitialAd? = null
+    private final var TAG = "MainActivity"
     @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +64,21 @@ class MainActivity : AppCompatActivity() {
 
         mItemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         setAlarms(mItemViewModel)
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(this,"ca-app-pub-3409964174267492/7001584513",adRequest,object : InterstitialAdLoadCallback(){
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d(TAG, adError.message)
+                mInterstitialAd = null
+            }
 
-        mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.adUnitId = "ca-app-pub-3409964174267492/7001584513"
-        mInterstitialAd.loadAd(AdRequest.Builder().build())
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.d(TAG, "Ad was loaded.")
+                mInterstitialAd = interstitialAd
+            }
+        })
+        //mInterstitialAd = InterstitialAd(this)
+       // mInterstitialAd.adUnitId = "ca-app-pub-3409964174267492/7001584513"
+        //mInterstitialAd.loadAd(AdRequest.Builder().build())
     }
 
     override fun onBackPressed() {
@@ -165,8 +179,11 @@ class MainActivity : AppCompatActivity() {
                 //ca-app-pub-3940256099942544/1033173712
                 val intent = Intent(this, WholeViewSnappingActivity::class.java)
                 startActivity(intent)
-                if (mInterstitialAd.isLoaded)
-                    mInterstitialAd.show()
+                if (mInterstitialAd != null) {
+                    mInterstitialAd?.show(this)
+                } else {
+                    Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                }
 
             }
             R.id.actionNightMode -> {
